@@ -1,0 +1,283 @@
+forall X -> X __tact_not_null(X x) { throw_if(128, null?(x)); return x; }
+
+global (int, slice, int) __tact_context;
+global cell __tact_context_sys;
+
+(int, slice, int) __tact_context_get() inline { return __tact_context; }
+
+(slice, slice) __tact_load_address(slice cs) inline {
+    slice raw = cs~load_msg_addr();
+    return (cs, raw);
+}
+
+builder __tact_store_address(builder b, slice address) inline {
+    b = b.store_slice(address);
+    return b;
+}
+
+int __tact_address_eq(slice a, slice b) inline {
+    return equal_slice_bits(a, b);
+}
+
+(slice, ((int, int))) __gen_read_TopUp(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2882324798);
+    var v'valueA = sc_0~load_coins();
+    var v'valueB = sc_0~load_coins();
+    return (sc_0, (v'valueA, v'valueB));
+}
+
+(slice, ((int, int))) __gen_read_Withdraw(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1286094280);
+    var v'wonA = sc_0~load_int(1);
+    var v'wonB = sc_0~load_int(1);
+    return (sc_0, (v'wonA, v'wonB));
+}
+
+builder __gen_write_WithdrawResponse(builder build_0, (slice, int, int) v) inline {
+    var (v'owner, v'valueA, v'valueB) = v;
+    build_0 = store_uint(build_0, 3484866422, 32);
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = store_coins(build_0, v'valueA);
+    build_0 = store_coins(build_0, v'valueB);
+    return build_0;
+}
+
+cell __gen_writecell_WithdrawResponse((slice, int, int) v) inline {
+    return __gen_write_WithdrawResponse(begin_cell(), v).end_cell();
+}
+
+builder __gen_write_BetHolder(builder build_0, (slice, slice, int, int, int) v) inline {
+    var (v'owner, v'master, v'balanceA, v'balanceB, v'completed) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = __tact_store_address(build_0, v'master);
+    build_0 = store_int(build_0, v'balanceA, 257);
+    var build_1 = begin_cell();
+    build_1 = store_int(build_1, v'balanceB, 257);
+    build_1 = store_int(build_1, v'completed, 1);
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+(slice, ((slice, slice, int, int, int))) __gen_read_BetHolder(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    var v'master = sc_0~__tact_load_address();
+    var v'balanceA = sc_0~load_int(257);
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'balanceB = sc_1~load_int(257);
+    var v'completed = sc_1~load_int(1);
+    return (sc_0, (v'owner, v'master, v'balanceA, v'balanceB, v'completed));
+}
+
+(slice, slice, int, int, int) __gen_load_BetHolder() inline {
+    slice sc = get_data().begin_parse();
+    __tact_context_sys = sc~load_ref();
+    return sc~__gen_read_BetHolder();
+}
+
+() __gen_store_BetHolder((slice, slice, int, int, int) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = __gen_write_BetHolder(b, v);
+    set_data(b.end_cell());
+}
+
+builder storeBool(builder s, int value) impure {
+    if (value) {
+        return store_int(s, (- 1), 1);
+    } else {
+        return store_int(s, 0, 1);
+    }
+}
+
+() require(int condition) impure {
+    throw_unless(131, condition);
+}
+
+() send((int, slice, int, int, cell, cell, cell) params) impure {
+    var ((params'bounce, params'to, params'value, params'mode, params'body, params'code, params'data)) = params;
+    builder b = begin_cell();
+    b = store_int(b, 1, 2);
+    b = store_int(b, params'bounce, 1);
+    b = store_int(b, 0, 3);
+    b = __tact_store_address(b, params'to);
+    b = store_coins(b, params'value);
+    b = store_int(b, 0, ((((1 + 4) + 4) + 64) + 32));
+    if (((~ null?(params'code)) | (~ null?(params'data)))) {
+        b = storeBool(b, true);
+        builder bc = begin_cell();
+        bc = storeBool(bc, false);
+        bc = storeBool(bc, false);
+        if ((~ null?(params'code))) {
+            bc = storeBool(bc, true);
+            bc = store_ref(bc, params'code);
+        } else {
+            bc = storeBool(bc, false);
+        }
+        if ((~ null?(params'data))) {
+            bc = storeBool(bc, true);
+            bc = store_ref(bc, params'data);
+        } else {
+            bc = storeBool(bc, false);
+        }
+        bc = storeBool(bc, false);
+        b = storeBool(b, true);
+        b = store_ref(b, end_cell(bc));
+    } else {
+        b = storeBool(b, false);
+    }
+    cell body = params'body;
+    if ((~ null?(body))) {
+        b = store_int(b, true, 1);
+        b = store_ref(b, __tact_not_null(body));
+    } else {
+        b = store_int(b, false, 1);
+    }
+    cell c = end_cell(b);
+    send_raw_message(c, params'mode);
+}
+
+() simpleSend(slice to, int value, int mode) impure {
+    send((false, to, value, mode, null(), null(), null()));
+}
+
+cell __gen_BetHolder_init(cell sys', slice master, slice owner) {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = (null(), null(), null(), null(), null());
+    self'owner = owner;
+    self'master = master;
+    self'balanceA = 0;
+    self'balanceB = 0;
+    self'completed = false;
+    var b' = begin_cell();
+    b' = b'.store_ref(sys');
+    b' = __gen_write_BetHolder(b', (self'owner, self'master, self'balanceA, self'balanceB, self'completed));
+    return b'.end_cell();
+}
+
+slice __gen_BetHolder_master((slice, slice, int, int, int) self) impure {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
+    return self'master;
+}
+
+_ __gen_get_master() method_id(120253) {
+    var self = __gen_load_BetHolder();
+    var res = __gen_BetHolder_master(self);
+    return res;
+}
+
+int __gen_BetHolder_balanceA((slice, slice, int, int, int) self) impure {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
+    return self'balanceA;
+}
+
+_ __gen_get_balanceA() method_id(97178) {
+    var self = __gen_load_BetHolder();
+    var res = __gen_BetHolder_balanceA(self);
+    return res;
+}
+
+int __gen_BetHolder_balanceB((slice, slice, int, int, int) self) impure {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
+    return self'balanceA;
+}
+
+_ __gen_get_balanceB() method_id(84985) {
+    var self = __gen_load_BetHolder();
+    var res = __gen_BetHolder_balanceB(self);
+    return res;
+}
+
+slice __gen_BetHolder_owner((slice, slice, int, int, int) self) impure {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
+    return self'owner;
+}
+
+_ __gen_get_owner() method_id(83229) {
+    var self = __gen_load_BetHolder();
+    var res = __gen_BetHolder_owner(self);
+    return res;
+}
+
+(((slice, slice, int, int, int)), ()) __gen_BetHolder_receive_TopUp((slice, slice, int, int, int) self, (int, int) msg) impure {
+    var (self'owner, self'master, self'balanceA, self'balanceB, self'completed) = self;
+    var (msg'valueA, msg'valueB) = msg;
+    var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
+    require(__tact_address_eq(ctx'sender, self'master));
+    require((~ self'completed));
+    self'balanceA = (self'balanceA + msg'valueA);
+    self'balanceB = (self'balanceB + msg'valueB);
+    raw_reserve(10000000, 0);
+    simpleSend(self'owner, 0, (64 + 2));
+    return ((self'owner, self'master, self'balanceA, self'balanceB, self'completed), ());
+}
+
+(((slice, slice, int, int, int)), ()) __gen_BetHolder_receive_Withdraw((slice, slice, int, int, int) self, (int, int) msg) impure {
+    var (self'owner, self'master, self'balanceA, self'balanceB, self'completed) = self;
+    var (msg'wonA, msg'wonB) = msg;
+    var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
+    require(__tact_address_eq(ctx'sender, self'master));
+    int balanceA = 0;
+    int balanceB = 0;
+    if ((~ self'completed)) {
+        balanceA = self'balanceA;
+        balanceB = self'balanceB;
+        self'completed = true;
+    }
+    send((false, self'master, 0, (128 + 2), __gen_writecell_WithdrawResponse((self'owner, balanceA, balanceB)), null(), null()));
+    return ((self'owner, self'master, self'balanceA, self'balanceB, self'completed), ());
+}
+
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = ((msg_flags & 1) == 1 ? true : false);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value);
+    
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return ();
+    }
+    
+    ;; Receive TopUp message
+    if (op == 2882324798) {
+        var self = __gen_load_BetHolder();
+        var msg = in_msg~__gen_read_TopUp();
+        self~__gen_BetHolder_receive_TopUp(msg);
+        __gen_store_BetHolder(self);
+        return ();
+    }
+    
+    ;; Receive Withdraw message
+    if (op == 1286094280) {
+        var self = __gen_load_BetHolder();
+        var msg = in_msg~__gen_read_Withdraw();
+        self~__gen_BetHolder_receive_Withdraw(msg);
+        __gen_store_BetHolder(self);
+        return ();
+    }
+    
+    throw(130);
+}
+
+cell init_BetHolder(cell sys', slice master, slice owner) method_id {
+    return __gen_BetHolder_init(sys', master, owner);
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() {
+    return "ipfs://QmPiKZ5ifq9eX2QsxQzbabJRvmE2FmGXmNVx4M2SicccGh";
+}

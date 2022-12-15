@@ -1,0 +1,432 @@
+PROGRAM{
+  DECLPROC __tact_not_null
+  DECLPROC __tact_context_get
+  DECLPROC __tact_load_address
+  DECLPROC __tact_store_address
+  DECLPROC __tact_address_eq
+  DECLPROC __gen_read_TopUp
+  DECLPROC __gen_read_Withdraw
+  DECLPROC __gen_write_WithdrawResponse
+  DECLPROC __gen_writecell_WithdrawResponse
+  DECLPROC __gen_write_BetHolder
+  DECLPROC __gen_read_BetHolder
+  DECLPROC __gen_load_BetHolder
+  DECLPROC __gen_store_BetHolder
+  DECLPROC storeBool
+  DECLPROC require
+  DECLPROC send
+  DECLPROC simpleSend
+  DECLPROC __gen_BetHolder_init
+  DECLPROC __gen_BetHolder_master
+  120253 DECLMETHOD __gen_get_master
+  DECLPROC __gen_BetHolder_balanceA
+  97178 DECLMETHOD __gen_get_balanceA
+  DECLPROC __gen_BetHolder_balanceB
+  84985 DECLMETHOD __gen_get_balanceB
+  DECLPROC __gen_BetHolder_owner
+  83229 DECLMETHOD __gen_get_owner
+  DECLPROC __gen_BetHolder_receive_TopUp
+  DECLPROC __gen_BetHolder_receive_Withdraw
+  DECLPROC recv_internal
+  122127 DECLMETHOD init_BetHolder
+  113617 DECLMETHOD supported_interfaces
+  DECLPROC get_abi_ipfs
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sys
+  __tact_not_null PROC:<{
+    DUP
+    ISNULL
+    128 THROWIF
+  }>
+  __tact_context_get PROCINLINE:<{
+    __tact_context GETGLOB
+    UNTRIPLE
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+  }>
+  __tact_store_address PROCINLINE:<{
+    STSLICER
+  }>
+  __tact_address_eq PROCINLINE:<{
+    SDEQ
+  }>
+  __gen_read_TopUp PROCINLINE:<{
+    32 LDU
+    SWAP
+    2882324798 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    LDGRAMS
+    LDGRAMS
+    -ROT
+  }>
+  __gen_read_Withdraw PROCINLINE:<{
+    32 LDU
+    SWAP
+    1286094280 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    1 LDI
+    1 LDI
+    -ROT
+  }>
+  __gen_write_WithdrawResponse PROCINLINE:<{
+    3484866422 PUSHINT
+    s0 s4 XCHG2
+    32 STU
+    ROT
+    __tact_store_address INLINECALLDICT
+    SWAP
+    STGRAMS
+    SWAP
+    STGRAMS
+  }>
+  __gen_writecell_WithdrawResponse PROCINLINE:<{
+    NEWC
+    3 -ROLL
+    __gen_write_WithdrawResponse INLINECALLDICT
+    ENDC
+  }>
+  __gen_write_BetHolder PROCINLINE:<{
+    s5 s4 XCHG2
+    __tact_store_address INLINECALLDICT
+    ROT
+    __tact_store_address INLINECALLDICT
+    257 PUSHINT
+    STIX
+    s0 s2 XCHG
+    NEWC
+    257 PUSHINT
+    STIX
+    1 STI
+    ENDC
+    SWAP
+    STREF
+  }>
+  __gen_read_BetHolder PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    SWAP
+    257 PUSHINT
+    LDIX
+    LDREF
+    SWAP
+    CTOS
+    257 PUSHINT
+    LDIX
+    1 LDI
+    DROP
+    s2 s5 XCHG
+    s2 s4 XCHG
+    s2 s3 XCHG
+  }>
+  __gen_load_BetHolder PROCINLINE:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    __gen_read_BetHolder INLINECALLDICT
+    1 5 BLKDROP2
+  }>
+  __gen_store_BetHolder PROCINLINE:<{
+    NEWC
+    __tact_context_sys GETGLOB
+    SWAP
+    STREF
+    5 -ROLL
+    __gen_write_BetHolder INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  storeBool PROC:<{
+    IFJMP:<{
+      -1 PUSHINT
+      SWAP
+      1 STI
+    }>
+    0 PUSHINT
+    SWAP
+    1 STI
+  }>
+  require PROC:<{
+    131 THROWIFNOT
+  }>
+  send PROC:<{
+    NEWC
+    1 PUSHINT
+    SWAP
+    2 STI
+    s1 s7 XCHG
+    1 STI
+    0 PUSHINT
+    SWAP
+    3 STI
+    s0 s5 XCHG2
+    __tact_store_address INLINECALLDICT
+    s0 s3 XCHG2
+    STGRAMS
+    0 PUSHINT
+    SWAP
+    105 STI
+    s3 PUSH
+    ISNULL
+    NOT
+    s5 PUSH
+    ISNULL
+    NOT
+    OR
+    IF:<{
+      TRUE
+      storeBool CALLDICT
+      NEWC
+      FALSE
+      storeBool CALLDICT
+      FALSE
+      storeBool CALLDICT
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        storeBool CALLDICT
+        s1 s4 XCHG
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        storeBool CALLDICT
+      }>
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        storeBool CALLDICT
+        s1 s4 XCHG
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        storeBool CALLDICT
+      }>
+      FALSE
+      storeBool CALLDICT
+      s0 s2 XCHG
+      TRUE
+      storeBool CALLDICT
+      s0 s2 XCHG
+      ENDC
+      ROT
+      STREF
+    }>ELSE<{
+      s3 POP
+      s3 POP
+      SWAP
+      FALSE
+      storeBool CALLDICT
+    }>
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      SWAP
+      1 STI
+      SWAP
+      __tact_not_null CALLDICT
+      SWAP
+      STREF
+    }>ELSE<{
+      FALSE
+      s2 POP
+      1 STI
+    }>
+    ENDC
+    SWAP
+    SENDRAWMSG
+  }>
+  simpleSend PROC:<{
+    FALSE
+    3 -ROLL
+    PUSHNULL
+    PUSHNULL
+    PUSHNULL
+    send CALLDICT
+  }>
+  __gen_BetHolder_init PROC:<{
+    0 PUSHINT
+    DUP
+    FALSE
+    s0 s5 XCHG
+    NEWC
+    STREF
+    s0 s5 XCHG
+    s3 s4 XCHG
+    __gen_write_BetHolder INLINECALLDICT
+    ENDC
+  }>
+  __gen_BetHolder_master PROC:<{
+    s3 s4 XCHG
+    4 BLKDROP
+  }>
+  __gen_get_master PROC:<{
+    __gen_load_BetHolder INLINECALLDICT
+    __gen_BetHolder_master CALLDICT
+  }>
+  __gen_BetHolder_balanceA PROC:<{
+    s2 s4 XCHG
+    4 BLKDROP
+  }>
+  __gen_get_balanceA PROC:<{
+    __gen_load_BetHolder INLINECALLDICT
+    __gen_BetHolder_balanceA CALLDICT
+  }>
+  __gen_BetHolder_balanceB PROC:<{
+    s2 s4 XCHG
+    4 BLKDROP
+  }>
+  __gen_get_balanceB PROC:<{
+    __gen_load_BetHolder INLINECALLDICT
+    __gen_BetHolder_balanceB CALLDICT
+  }>
+  __gen_BetHolder_owner PROC:<{
+    4 BLKDROP
+  }>
+  __gen_get_owner PROC:<{
+    __gen_load_BetHolder INLINECALLDICT
+    __gen_BetHolder_owner CALLDICT
+  }>
+  __gen_BetHolder_receive_TopUp PROC:<{
+    __tact_context_get INLINECALLDICT
+    DROP
+    NIP
+    s6 PUSH
+    __tact_address_eq INLINECALLDICT
+    require CALLDICT
+    s2 PUSH
+    NOT
+    require CALLDICT
+    s4 s4 XCHG2
+    ADD
+    s2 s3 XCHG2
+    ADD
+    10000000 PUSHINT
+    0 PUSHINT
+    RAWRESERVE
+    s4 PUSH
+    0 PUSHINT
+    66 PUSHINT
+    simpleSend CALLDICT
+    SWAP
+  }>
+  __gen_BetHolder_receive_Withdraw PROC:<{
+    2DROP
+    __tact_context_get INLINECALLDICT
+    DROP
+    NIP
+    s4 PUSH
+    __tact_address_eq INLINECALLDICT
+    require CALLDICT
+    0 PUSHINT
+    s0 s1 PUSH2
+    NOT
+    IF:<{
+      3 BLKDROP
+      2DUP
+      TRUE
+      -ROT
+    }>
+    FALSE
+    0 PUSHINT
+    130 PUSHINT
+    s9 s4 s3 PUXC2
+    __gen_writecell_WithdrawResponse INLINECALLDICT
+    s3 s0 s7 XC2PU
+    3 -ROLL
+    PUSHNULL
+    PUSHNULL
+    send CALLDICT
+  }>
+  recv_internal PROC:<{
+    0 PUSHINT
+    OVER
+    SBITS
+    31 GTINT
+    IF:<{
+      DROP
+      DUP
+      32 PLDU
+    }>
+    s0 s2 XCHG
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    1 EQINT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      FALSE
+    }>
+    SWAP
+    LDMSGADDR
+    DROP
+    s1 s0 s4 PUXC2
+    TRIPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    IFJMP:<{
+      2DROP
+    }>
+    DUP
+    2882324798 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      __gen_load_BetHolder INLINECALLDICT
+      s0 s5 XCHG
+      __gen_read_TopUp INLINECALLDICT
+      s2 POP
+      s5 s6 XCHG
+      s4 s5 XCHG
+      s3 s4 XCHG
+      s3 s0 s0 XCHG3
+      __gen_BetHolder_receive_TopUp CALLDICT
+      __gen_store_BetHolder INLINECALLDICT
+    }>
+    1286094280 PUSHINT
+    EQUAL
+    IFJMP:<{
+      __gen_load_BetHolder INLINECALLDICT
+      s0 s5 XCHG
+      __gen_read_Withdraw INLINECALLDICT
+      s2 POP
+      s5 s6 XCHG
+      s4 s5 XCHG
+      s3 s4 XCHG
+      s3 s0 s0 XCHG3
+      __gen_BetHolder_receive_Withdraw CALLDICT
+      __gen_store_BetHolder INLINECALLDICT
+    }>
+    DROP
+    130 THROW
+  }>
+  init_BetHolder PROC:<{
+    __gen_BetHolder_init CALLDICT
+  }>
+  supported_interfaces PROC:<{
+    123515602279859691144772641439386770278 PUSHINT
+    209801025412363888721030803524359905849 PUSHINT
+    86142586315491086060343270784266291122 PUSHINT
+  }>
+  get_abi_ipfs PROC:<{
+    x{697066733a2f2f516d50694b5a3569667139655832517378517a6261624a52766d4532466d47586d4e5678344d3253696363634768} PUSHSLICE
+  }>
+}END>c
