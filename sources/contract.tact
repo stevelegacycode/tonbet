@@ -20,8 +20,8 @@ message WithdrawResponse {
 contract BetHolder with Ownable {
     owner: Address;
     master: Address;
-    balanceA: Int;
-    balanceB: Int;
+    balanceA: Int as coins;
+    balanceB: Int as coins;
     completed: Bool;
 
     init(master: Address, owner: Address) {

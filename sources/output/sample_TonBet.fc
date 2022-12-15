@@ -83,11 +83,9 @@ builder __gen_write_BetHolder(builder build_0, (slice, slice, int, int, int) v) 
     var (v'owner, v'master, v'balanceA, v'balanceB, v'completed) = v;
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = __tact_store_address(build_0, v'master);
-    build_0 = store_int(build_0, v'balanceA, 257);
-    var build_1 = begin_cell();
-    build_1 = store_int(build_1, v'balanceB, 257);
-    build_1 = store_int(build_1, v'completed, 1);
-    build_0 = store_ref(build_0, build_1.end_cell());
+    build_0 = store_coins(build_0, v'balanceA);
+    build_0 = store_coins(build_0, v'balanceB);
+    build_0 = store_int(build_0, v'completed, 1);
     return build_0;
 }
 
@@ -136,7 +134,7 @@ _ __gen_Context_get_sender((int, slice, int) v) inline {
     set_data(b.end_cell());
 }
 
-builder storeBool(builder s, int value) impure {
+builder storeBool(builder s, int value) impure inline {
     if (value) {
         return store_int(s, (- 1), 1);
     } else {
@@ -144,11 +142,11 @@ builder storeBool(builder s, int value) impure {
     }
 }
 
-() require(int condition) impure {
+() require(int condition) impure inline {
     throw_unless(131, condition);
 }
 
-() send((int, slice, int, int, cell, cell, cell) params) impure {
+() send((int, slice, int, int, cell, cell, cell) params) impure inline {
     var ((params'bounce, params'to, params'value, params'mode, params'body, params'code, params'data)) = params;
     builder b = begin_cell();
     b = store_int(b, 1, 2);
@@ -191,16 +189,16 @@ builder storeBool(builder s, int value) impure {
     send_raw_message(c, params'mode);
 }
 
-() simpleSend(slice to, int value, int mode) impure {
+() simpleSend(slice to, int value, int mode) impure inline {
     send((false, to, value, mode, null(), null(), null()));
 }
 
-() simpleReply(int value, int mode) impure {
+() simpleReply(int value, int mode) impure inline {
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
     simpleSend(ctx'sender, value, mode);
 }
 
-cell __gen_BetHolder_init(cell sys', slice master, slice owner) {
+cell __gen_BetHolder_init(cell sys', slice master, slice owner) inline {
     var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = (null(), null(), null(), null(), null());
     self'owner = owner;
     self'master = master;
@@ -213,7 +211,7 @@ cell __gen_BetHolder_init(cell sys', slice master, slice owner) {
     return b'.end_cell();
 }
 
-(cell, cell) __gen_BetHolder_init_child(cell sys', slice master, slice owner) {
+(cell, cell) __gen_BetHolder_init_child(cell sys', slice master, slice owner) inline {
     slice sc' = sys'.begin_parse();
     cell source = sc'~load_dict();
     cell mine = __tact_dict_get_code(source, 63785);
@@ -222,7 +220,7 @@ cell __gen_BetHolder_init(cell sys', slice master, slice owner) {
     return (mine, __gen_BetHolder_init(sys, master, owner));
 }
 
-cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) {
+cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = (null(), null(), null(), null(), null(), null(), null(), null(), null());
     self'owner = owner;
     self'balanceA = 0;
@@ -239,13 +237,13 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) {
     return b'.end_cell();
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_requireNotStopped((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_requireNotStopped((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     require((~ self'stopped));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_acceptBet((slice, int, int, int, int, int, int, int, int) self, int isA) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_acceptBet((slice, int, int, int, int, int, int, int, int) self, int isA) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireNotStopped();
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
@@ -267,13 +265,13 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_requireOwner((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_requireOwner((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     throw_unless(132, __tact_address_eq(__gen_Context_get_sender(__tact_context_get()), self'owner));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_teamWon((slice, int, int, int, int, int, int, int, int) self, int isA) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_teamWon((slice, int, int, int, int, int, int, int, int) self, int isA) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
@@ -297,7 +295,7 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-int __gen_TonBet_completed((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_completed((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'completed;
 }
@@ -308,7 +306,7 @@ _ __gen_get_completed() method_id(79554) {
     return res;
 }
 
-int __gen_TonBet_minBet((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_minBet((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'minBet;
 }
@@ -319,7 +317,7 @@ _ __gen_get_minBet() method_id(123506) {
     return res;
 }
 
-int __gen_TonBet_fee((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_fee((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'fee;
 }
@@ -330,7 +328,7 @@ _ __gen_get_fee() method_id(123159) {
     return res;
 }
 
-int __gen_TonBet_balanceA((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_balanceA((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'balanceA;
 }
@@ -341,7 +339,7 @@ _ __gen_get_balanceA() method_id(97178) {
     return res;
 }
 
-int __gen_TonBet_balanceB((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_balanceB((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'balanceB;
 }
@@ -352,7 +350,7 @@ _ __gen_get_balanceB() method_id(84985) {
     return res;
 }
 
-slice __gen_TonBet_owner((slice, int, int, int, int, int, int, int, int) self) impure {
+slice __gen_TonBet_owner((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'owner;
 }
@@ -363,7 +361,7 @@ _ __gen_get_owner() method_id(83229) {
     return res;
 }
 
-int __gen_TonBet_stopped((slice, int, int, int, int, int, int, int, int) self) impure {
+int __gen_TonBet_stopped((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     return self'stopped;
 }
@@ -374,19 +372,19 @@ _ __gen_get_stopped() method_id(74107) {
     return res;
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_acceptBet(true);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_acceptBet(false);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
     require(self'completed);
@@ -397,7 +395,7 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
     int locked = (self'balanceA + self'balanceB);
@@ -408,7 +406,7 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_WithdrawResponse((slice, int, int, int, int, int, int, int, int) self, (slice, int, int) msg) impure {
+(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_WithdrawResponse((slice, int, int, int, int, int, int, int, int) self, (slice, int, int) msg) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     var (msg'owner, msg'valueA, msg'valueB) = msg;
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
@@ -425,19 +423,19 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(true);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(false);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_ChangeOwner((slice, int, int, int, int, int, int, int, int) self, (slice) msg) impure {
+(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_ChangeOwner((slice, int, int, int, int, int, int, int, int) self, (slice) msg) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     var (msg'newOwner) = msg;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
@@ -445,7 +443,7 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
-((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f((slice, int, int, int, int, int, int, int, int) self) impure {
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireNotStopped();

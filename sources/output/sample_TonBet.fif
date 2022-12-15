@@ -167,16 +167,11 @@ PROGRAM{
     __tact_store_address INLINECALLDICT
     ROT
     __tact_store_address INLINECALLDICT
-    257 PUSHINT
-    STIX
-    s0 s2 XCHG
-    NEWC
-    257 PUSHINT
-    STIX
-    1 STI
-    ENDC
     SWAP
-    STREF
+    STGRAMS
+    ROT
+    STGRAMS
+    1 STI
   }>
   __gen_write_TonBet PROCINLINE:<{
     s9 s8 XCHG2
@@ -232,20 +227,21 @@ PROGRAM{
     ENDC
     c4 POP
   }>
-  storeBool PROC:<{
-    IFJMP:<{
+  storeBool PROCINLINE:<{
+    IF:<{
       -1 PUSHINT
       SWAP
       1 STI
+    }>ELSE<{
+      0 PUSHINT
+      SWAP
+      1 STI
     }>
-    0 PUSHINT
-    SWAP
-    1 STI
   }>
-  require PROC:<{
+  require PROCINLINE:<{
     131 THROWIFNOT
   }>
-  send PROC:<{
+  send PROCINLINE:<{
     NEWC
     1 PUSHINT
     SWAP
@@ -271,45 +267,45 @@ PROGRAM{
     OR
     IF:<{
       TRUE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
       NEWC
       FALSE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
       FALSE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
       s4 PUSH
       ISNULL
       NOT
       IF:<{
         TRUE
-        storeBool CALLDICT
+        storeBool INLINECALLDICT
         s1 s4 XCHG
         STREF
       }>ELSE<{
         s4 POP
         s0 s3 XCHG
         FALSE
-        storeBool CALLDICT
+        storeBool INLINECALLDICT
       }>
       s4 PUSH
       ISNULL
       NOT
       IF:<{
         TRUE
-        storeBool CALLDICT
+        storeBool INLINECALLDICT
         s1 s4 XCHG
         STREF
       }>ELSE<{
         s4 POP
         s0 s3 XCHG
         FALSE
-        storeBool CALLDICT
+        storeBool INLINECALLDICT
       }>
       FALSE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
       s0 s2 XCHG
       TRUE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
       s0 s2 XCHG
       ENDC
       ROT
@@ -319,7 +315,7 @@ PROGRAM{
       s3 POP
       SWAP
       FALSE
-      storeBool CALLDICT
+      storeBool INLINECALLDICT
     }>
     OVER
     ISNULL
@@ -341,22 +337,22 @@ PROGRAM{
     SWAP
     SENDRAWMSG
   }>
-  simpleSend PROC:<{
+  simpleSend PROCINLINE:<{
     FALSE
     3 -ROLL
     PUSHNULL
     PUSHNULL
     PUSHNULL
-    send CALLDICT
+    send INLINECALLDICT
   }>
-  simpleReply PROC:<{
+  simpleReply PROCINLINE:<{
     __tact_context_get INLINECALLDICT
     DROP
     NIP
     -ROT
-    simpleSend CALLDICT
+    simpleSend INLINECALLDICT
   }>
-  __gen_BetHolder_init PROC:<{
+  __gen_BetHolder_init PROCINLINE:<{
     0 PUSHINT
     DUP
     FALSE
@@ -368,7 +364,7 @@ PROGRAM{
     __gen_write_BetHolder INLINECALLDICT
     ENDC
   }>
-  __gen_BetHolder_init_child PROC:<{
+  __gen_BetHolder_init_child PROCINLINE:<{
     s0 s2 XCHG
     CTOS
     LDDICT
@@ -380,9 +376,9 @@ PROGRAM{
     STDICT
     ENDC
     s0 s0 s3 XCHG3
-    __gen_BetHolder_init CALLDICT
+    __gen_BetHolder_init INLINECALLDICT
   }>
-  __gen_TonBet_init PROC:<{
+  __gen_TonBet_init PROCINLINE:<{
     0 PUSHINT
     DUP
     FALSE
@@ -398,19 +394,19 @@ PROGRAM{
     __gen_write_TonBet INLINECALLDICT
     ENDC
   }>
-  __gen_TonBet_requireNotStopped PROC:<{
+  __gen_TonBet_requireNotStopped PROCINLINE:<{
     s3 PUSH
     NOT
-    require CALLDICT
+    require INLINECALLDICT
   }>
-  __gen_TonBet_acceptBet PROC:<{
+  __gen_TonBet_acceptBet PROCINLINE:<{
     9 -ROLL
-    __gen_TonBet_requireNotStopped CALLDICT
+    __gen_TonBet_requireNotStopped INLINECALLDICT
     __tact_context_get INLINECALLDICT
     s2 POP
     s1 s7 PUSH2
     GREATER
-    require CALLDICT
+    require INLINECALLDICT
     SWAP
     1000000000 PUSHINT
     SUB
@@ -436,7 +432,7 @@ PROGRAM{
     __tact_context_sys GETGLOB
     MYADDR
     3 ROLL
-    __gen_BetHolder_init_child CALLDICT
+    __gen_BetHolder_init_child INLINECALLDICT
     0 PUSHINT
     -ROT
     __tact_compute_contract_address CALLDICT
@@ -450,23 +446,23 @@ PROGRAM{
     s11 s13 s0 XCHG3
     PUSHNULL
     PUSHNULL
-    send CALLDICT
+    send INLINECALLDICT
     8 ROLL
   }>
-  __gen_TonBet_requireOwner PROC:<{
+  __gen_TonBet_requireOwner PROCINLINE:<{
     __tact_context_get INLINECALLDICT
     __gen_Context_get_sender INLINECALLDICT
     s9 PUSH
     __tact_address_eq INLINECALLDICT
     132 THROWIFNOT
   }>
-  __gen_TonBet_teamWon PROC:<{
+  __gen_TonBet_teamWon PROCINLINE:<{
     9 -ROLL
-    __gen_TonBet_requireOwner CALLDICT
+    __gen_TonBet_requireOwner INLINECALLDICT
     DROP
     OVER
     NOT
-    require CALLDICT
+    require INLINECALLDICT
     s6 s5 PUSH2
     ADD
     s0 s9 XCHG
@@ -492,85 +488,85 @@ PROGRAM{
     }>
     0 PUSHINT
     66 PUSHINT
-    simpleReply CALLDICT
+    simpleReply INLINECALLDICT
     8 ROLL
   }>
-  __gen_TonBet_completed PROC:<{
+  __gen_TonBet_completed PROCINLINE:<{
     s2 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_completed PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_completed CALLDICT
+    __gen_TonBet_completed INLINECALLDICT
   }>
-  __gen_TonBet_minBet PROC:<{
+  __gen_TonBet_minBet PROCINLINE:<{
     s5 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_minBet PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_minBet CALLDICT
+    __gen_TonBet_minBet INLINECALLDICT
   }>
-  __gen_TonBet_fee PROC:<{
+  __gen_TonBet_fee PROCINLINE:<{
     s4 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_fee PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_fee CALLDICT
+    __gen_TonBet_fee INLINECALLDICT
   }>
-  __gen_TonBet_balanceA PROC:<{
+  __gen_TonBet_balanceA PROCINLINE:<{
     s7 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_balanceA PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_balanceA CALLDICT
+    __gen_TonBet_balanceA INLINECALLDICT
   }>
-  __gen_TonBet_balanceB PROC:<{
+  __gen_TonBet_balanceB PROCINLINE:<{
     s6 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_balanceB PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_balanceB CALLDICT
+    __gen_TonBet_balanceB INLINECALLDICT
   }>
-  __gen_TonBet_owner PROC:<{
+  __gen_TonBet_owner PROCINLINE:<{
     8 BLKDROP
   }>
   __gen_get_owner PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_owner CALLDICT
+    __gen_TonBet_owner INLINECALLDICT
   }>
-  __gen_TonBet_stopped PROC:<{
+  __gen_TonBet_stopped PROCINLINE:<{
     s3 s8 XCHG
     8 BLKDROP
   }>
   __gen_get_stopped PROC:<{
     __gen_load_TonBet INLINECALLDICT
-    __gen_TonBet_stopped CALLDICT
+    __gen_TonBet_stopped INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5 PROC:<{
+  __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5 PROCINLINE:<{
     TRUE
-    __gen_TonBet_acceptBet CALLDICT
+    __gen_TonBet_acceptBet INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 PROC:<{
+  __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 PROCINLINE:<{
     FALSE
-    __gen_TonBet_acceptBet CALLDICT
+    __gen_TonBet_acceptBet INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca PROC:<{
+  __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca PROCINLINE:<{
     __tact_context_get INLINECALLDICT
     s2 POP
     s4 PUSH
-    require CALLDICT
+    require INLINECALLDICT
     SWAP
     1000000000 PUSHINT
     GREATER
-    require CALLDICT
+    require INLINECALLDICT
     __tact_context_sys GETGLOB
     MYADDR
     ROT
-    __gen_BetHolder_init_child CALLDICT
+    __gen_BetHolder_init_child INLINECALLDICT
     0 PUSHINT
     -ROT
     __tact_compute_contract_address CALLDICT
@@ -584,10 +580,10 @@ PROGRAM{
     s3 s4 XCHG
     PUSHNULL
     PUSHNULL
-    send CALLDICT
+    send INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466 PROC:<{
-    __gen_TonBet_requireOwner CALLDICT
+  __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466 PROCINLINE:<{
+    __gen_TonBet_requireOwner INLINECALLDICT
     s7 s6 PUSH2
     ADD
     DUP
@@ -600,21 +596,21 @@ PROGRAM{
     }>
     0 PUSHINT
     130 PUSHINT
-    simpleReply CALLDICT
+    simpleReply INLINECALLDICT
   }>
-  __gen_TonBet_receive_WithdrawResponse PROC:<{
+  __gen_TonBet_receive_WithdrawResponse PROCINLINE:<{
     __tact_context_get INLINECALLDICT
     DROP
     NIP
     __tact_context_sys GETGLOB
     MYADDR
     s5 PUSH
-    __gen_BetHolder_init_child CALLDICT
+    __gen_BetHolder_init_child INLINECALLDICT
     0 PUSHINT
     -ROT
     __tact_compute_contract_address CALLDICT
     __tact_address_eq INLINECALLDICT
-    require CALLDICT
+    require INLINECALLDICT
     OVER
     0 GTINT
     s2 POP
@@ -639,24 +635,24 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
     PUSHNULL
-    send CALLDICT
+    send INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f PROC:<{
+  __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f PROCINLINE:<{
     TRUE
-    __gen_TonBet_teamWon CALLDICT
+    __gen_TonBet_teamWon INLINECALLDICT
   }>
-  __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 PROC:<{
+  __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 PROCINLINE:<{
     FALSE
-    __gen_TonBet_teamWon CALLDICT
+    __gen_TonBet_teamWon INLINECALLDICT
   }>
-  __gen_TonBet_receive_ChangeOwner PROC:<{
+  __gen_TonBet_receive_ChangeOwner PROCINLINE:<{
     9 -ROLL
-    __gen_TonBet_requireOwner CALLDICT
+    __gen_TonBet_requireOwner INLINECALLDICT
     1 8 BLKDROP2
   }>
-  __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f PROC:<{
-    __gen_TonBet_requireOwner CALLDICT
-    __gen_TonBet_requireNotStopped CALLDICT
+  __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f PROCINLINE:<{
+    __gen_TonBet_requireOwner INLINECALLDICT
+    __gen_TonBet_requireNotStopped INLINECALLDICT
     TRUE
     s4 POP
   }>
@@ -711,7 +707,7 @@ PROGRAM{
       s4 s5 XCHG
       s3 s4 XCHG
       ROT
-      __gen_TonBet_receive_WithdrawResponse CALLDICT
+      __gen_TonBet_receive_WithdrawResponse INLINECALLDICT
       __gen_store_TonBet INLINECALLDICT
     }>
     DUP
@@ -730,7 +726,7 @@ PROGRAM{
       s4 s5 XCHG
       s3 s4 XCHG
       s1 s3 s0 XCHG3
-      __gen_TonBet_receive_ChangeOwner CALLDICT
+      __gen_TonBet_receive_ChangeOwner INLINECALLDICT
       __gen_store_TonBet INLINECALLDICT
     }>
     0 EQINT
@@ -742,7 +738,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5 CALLDICT
+        __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5 INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -752,7 +748,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 CALLDICT
+        __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -762,7 +758,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca CALLDICT
+        __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -772,7 +768,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466 CALLDICT
+        __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466 INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -782,7 +778,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f CALLDICT
+        __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -792,7 +788,7 @@ PROGRAM{
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 CALLDICT
+        __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -800,7 +796,7 @@ PROGRAM{
       EQUAL
       IFJMP:<{
         __gen_load_TonBet INLINECALLDICT
-        __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f CALLDICT
+        __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -810,7 +806,7 @@ PROGRAM{
     130 THROW
   }>
   init_TonBet PROC:<{
-    __gen_TonBet_init CALLDICT
+    __gen_TonBet_init INLINECALLDICT
   }>
   supported_interfaces PROC:<{
     123515602279859691144772641439386770278 PUSHINT
