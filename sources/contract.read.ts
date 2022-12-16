@@ -11,7 +11,7 @@ import { TonBet } from "./output/sample_TonBet";
     let block = (await client.getLastBlock()).last.seqno;
 
     console.log('Loading contract data...');
-    let executor = await createExecutorFromRemote(client, block, Address.parse('kQCyy3KcZ9tGjoYWz9_l-iL8f-_PAsvmQJ7zKweFO19yt_hP'));
+    let executor = await createExecutorFromRemote(client, block, Address.parse('kQD_yW9C401nxUaNN8BCdUEVSAbdp_VRrKGeSoNYUmnPXnr9'));
     let contract = new TonBet(executor);
     let balanceA = await contract.getBalanceA();
     let balanceB = await contract.getBalanceB();
