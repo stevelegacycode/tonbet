@@ -283,9 +283,13 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) inline {
     if (isA) {
         wonBalance = self'balanceA;
         lostBalance = self'balanceB;
+        self'balanceA = total;
+        self'balanceB = 0;
     } else {
         wonBalance = self'balanceB;
         lostBalance = self'balanceA;
+        self'balanceA = 0;
+        self'balanceB = total;
     }
     int wonPPT = 0;
     if ((total > 0)) {
@@ -467,6 +471,11 @@ _ __gen_get_stopped() method_id(74107) {
     slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
     require(__tact_address_eq(ctx'sender, holderAddress));
     int value = (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_resolveWonAmount(msg'valueA, msg'valueB);
+    if (self'teamAwon) {
+        self'balanceA = (self'balanceA - value);
+    } else {
+        self'balanceB = (self'balanceB - value);
+    }
     send((false, msg'owner, value, (64 + 2), null(), null(), null()));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }

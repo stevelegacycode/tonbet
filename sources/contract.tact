@@ -180,9 +180,13 @@ contract TonBet with OwnableTransferable, Stoppable {
         if (isA) {
             wonBalance = self.balanceA;
             lostBalance = self.balanceB;
+            self.balanceA = total;
+            self.balanceB = 0;
         } else {
             wonBalance = self.balanceB;
             lostBalance = self.balanceA;
+            self.balanceA = 0;
+            self.balanceB = total;
         }
 
         // Calculate PPT
@@ -259,6 +263,13 @@ contract TonBet with OwnableTransferable, Stoppable {
 
         // Calculate value
         let value: Int = self.resolveWonAmount(msg.valueA, msg.valueB);
+
+        // Update balance
+        if (self.teamAwon) {
+            self.balanceA = self.balanceA - value;
+        } else {
+            self.balanceB = self.balanceB - value;
+        }
 
         // Send value
         send(SendParameters{

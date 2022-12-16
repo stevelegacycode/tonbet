@@ -177,8 +177,20 @@ SETCP0
           2 1 BLKDROP2
         }> PUSHCONT
         IFELSE
+        s2 PUSH
+        <{
+          s8 s8 XCPU
+          SUB
+        }> PUSHCONT
+        <{
+          s7 s7 XCPU
+          SUB
+          s0 s7 XCHG
+          s0 s8 XCHG
+        }> PUSHCONT
+        IFELSE
         0 PUSHINT
-        s0 s11 s11 XCHG3
+        s0 s11 s9 XCHG3
         66 PUSHINT
         PUSHNULL
         PUSHNULL
@@ -384,7 +396,8 @@ SETCP0
         ENDC
         s0 s1 XCHG
         SENDRAWMSG
-        1 8 BLKSWAP
+        s7 s8 XCHG
+        1 6 BLKSWAP
       }> CALLREF
       NEWC
       2 GETGLOBVAR
@@ -2087,25 +2100,33 @@ SETCP0
           ADD
           s7 PUSH
           <{
-            s5 PUSH
+            s4 POP
+            s3 PUSH
+            0 PUSHINT
           }> PUSHCONT
           <{
-            s4 PUSH
+            s5 POP
+            0 PUSHINT
+            s5 PUSH
+            s5 s6 XCHG
           }> PUSHCONT
           IFELSE
           0 PUSHINT
-          s2 PUSH
+          s6 PUSH
           0 GTINT
           <{
             s0 POP
-            s0 s1 XCHG
+            s0 s5 XCHG
             1000000000000 PUSHINT
             MUL
-            s0 s1 XCHG
+            s0 s6 XCHG2
             DIV QOUT
+            s0 s4 XCHG
+            s0 s5 XCHG
           }> PUSHCONT
           <{
-            2 1 BLKDROP2
+            s6 POP
+            s6 POP
           }> PUSHCONT
           IFELSE
           -1 PUSHINT
@@ -2322,12 +2343,11 @@ SETCP0
           ENDC
           s0 s1 XCHG
           SENDRAWMSG
-          s7 s8 XCHG
-          s6 s7 XCHG
-          s5 s6 XCHG
+          s1 s7 XCHG
+          s1 s8 XCHG
           s4 s5 XCHG
           s3 s4 XCHG
-          s0 s3 s3 XCHG3
+          s0 s1 s3 XCHG3
         }> CALLREF
         NEWC
         2 GETGLOBVAR
@@ -2396,25 +2416,33 @@ SETCP0
           ADD
           s7 PUSH
           <{
-            s5 PUSH
+            s4 POP
+            s3 PUSH
+            0 PUSHINT
           }> PUSHCONT
           <{
-            s4 PUSH
+            s5 POP
+            0 PUSHINT
+            s5 PUSH
+            s5 s6 XCHG
           }> PUSHCONT
           IFELSE
           0 PUSHINT
-          s2 PUSH
+          s6 PUSH
           0 GTINT
           <{
             s0 POP
-            s0 s1 XCHG
+            s0 s5 XCHG
             1000000000000 PUSHINT
             MUL
-            s0 s1 XCHG
+            s0 s6 XCHG2
             DIV QOUT
+            s0 s4 XCHG
+            s0 s5 XCHG
           }> PUSHCONT
           <{
-            2 1 BLKDROP2
+            s6 POP
+            s6 POP
           }> PUSHCONT
           IFELSE
           -1 PUSHINT
@@ -2631,12 +2659,11 @@ SETCP0
           ENDC
           s0 s1 XCHG
           SENDRAWMSG
-          s7 s8 XCHG
-          s6 s7 XCHG
-          s5 s6 XCHG
+          s1 s7 XCHG
+          s1 s8 XCHG
           s4 s5 XCHG
           s3 s4 XCHG
-          s0 s3 s3 XCHG3
+          s0 s1 s3 XCHG3
         }> CALLREF
         NEWC
         2 GETGLOBVAR
