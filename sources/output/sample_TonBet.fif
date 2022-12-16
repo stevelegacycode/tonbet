@@ -410,17 +410,17 @@ PROGRAM{
     require INLINECALLDICT
   }>
   __gen_TonBet_acceptBet PROCINLINE:<{
-    9 -ROLL
-    __gen_TonBet_requireNotStopped INLINECALLDICT
     __tact_context_get INLINECALLDICT
     s2 POP
-    s1 s7 PUSH2
-    GREATER
-    require INLINECALLDICT
-    SWAP
+    9 3 BLKSWAP
+    __gen_TonBet_requireNotStopped INLINECALLDICT
+    s0 s10 XCHG
     1000000000 PUSHINT
     SUB
-    s0 s6 PUSH2
+    s0 s5 PUSH2
+    GREATER
+    require INLINECALLDICT
+    s0 s4 PUSH2
     MUL
     100 PUSHINT
     DIV
@@ -429,35 +429,37 @@ PROGRAM{
     s0 s12 PUXC
     IF:<{
       DROP
-      s9 s9 XCPU
+      s7 s7 XCPU
       ADD
     }>ELSE<{
       s12 POP
-      s8 s8 XCPU
+      s6 s6 XCPU
       ADD
-      s0 s8 XCHG
+      s0 s6 XCHG
       s0 s11 XCHG
-      s0 s9 XCHG
+      s0 s7 XCHG
     }>
     __tact_context_sys GETGLOB
     MYADDR
-    3 ROLL
+    s1 s0 s11 XCHG3
     __gen_BetHolder_init_child INLINECALLDICT
     0 PUSHINT
     -ROT
     __tact_compute_contract_address CALLDICT
     FALSE
     1000000000 PUSHINT
-    s0 s11 XCHG
+    s0 s9 XCHG
     66 PUSHINT
     s0 s14 XCHG
     __gen_writecell_TopUp INLINECALLDICT
     4 1 REVERSE
-    s11 s13 s0 XCHG3
+    s9 s13 s0 XCHG3
     PUSHNULL
     PUSHNULL
     send INLINECALLDICT
-    8 ROLL
+    4 5 REVERSE
+    s3 s6 XCHG
+    3 3 BLKSWAP
   }>
   __gen_TonBet_requireOwner PROCINLINE:<{
     __tact_context_get INLINECALLDICT

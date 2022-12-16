@@ -562,20 +562,20 @@ SETCP0
         1 9 BLKDROP2
         -1 PUSHINT
         <{
-          9 1 BLKSWAP
-          s3 PUSH
-          NOT
-          131 THROWIFNOT
           1 GETGLOBVAR
           3 UNTUPLE
           s2 POP
-          s1 s7 PUSH2
-          GREATER
+          9 3 BLKSWAP
+          s3 PUSH
+          NOT
           131 THROWIFNOT
-          s0 s1 XCHG
+          s0 s10 XCHG
           1000000000 PUSHINT
           SUB
-          s0 s6 PUSH2
+          s0 s5 PUSH2
+          GREATER
+          131 THROWIFNOT
+          s0 s4 PUSH2
           MUL
           100 PUSHINT
           DIV QOUT
@@ -584,21 +584,21 @@ SETCP0
           s0 s12 PUXC
           <{
             s0 POP
-            s9 s9 XCPU
+            s7 s7 XCPU
             ADD
           }> PUSHCONT
           <{
             s12 POP
-            s8 s8 XCPU
+            s6 s6 XCPU
             ADD
-            s0 s8 XCHG
+            s0 s6 XCHG
             s0 s11 XCHG
-            s0 s9 XCHG
+            s0 s7 XCHG
           }> PUSHCONT
           IFELSE
           2 GETGLOBVAR
           MYADDR
-          1 3 BLKSWAP
+          s1 s0 s11 XCHG3
           s0 s2 XCHG
           CTOS
           LDDICT
@@ -637,7 +637,7 @@ SETCP0
           5 CALLDICT
           0 PUSHINT
           1000000000 PUSHINT
-          s0 s11 XCHG
+          s0 s9 XCHG
           66 PUSHINT
           s0 s14 XCHG
           NEWC
@@ -651,7 +651,7 @@ SETCP0
           STGRAMS
           ENDC
           4 1 REVERSE
-          s11 s13 s0 XCHG3
+          s9 s13 s0 XCHG3
           PUSHNULL
           PUSHNULL
           NEWC
@@ -855,7 +855,9 @@ SETCP0
           ENDC
           s0 s1 XCHG
           SENDRAWMSG
-          1 8 BLKSWAP
+          4 5 REVERSE
+          s3 s6 XCHG
+          3 3 BLKSWAP
         }> CALLREF
         NEWC
         2 GETGLOBVAR
@@ -908,20 +910,20 @@ SETCP0
         1 9 BLKDROP2
         0 PUSHINT
         <{
-          9 1 BLKSWAP
-          s3 PUSH
-          NOT
-          131 THROWIFNOT
           1 GETGLOBVAR
           3 UNTUPLE
           s2 POP
-          s1 s7 PUSH2
-          GREATER
+          9 3 BLKSWAP
+          s3 PUSH
+          NOT
           131 THROWIFNOT
-          s0 s1 XCHG
+          s0 s10 XCHG
           1000000000 PUSHINT
           SUB
-          s0 s6 PUSH2
+          s0 s5 PUSH2
+          GREATER
+          131 THROWIFNOT
+          s0 s4 PUSH2
           MUL
           100 PUSHINT
           DIV QOUT
@@ -930,21 +932,21 @@ SETCP0
           s0 s12 PUXC
           <{
             s0 POP
-            s9 s9 XCPU
+            s7 s7 XCPU
             ADD
           }> PUSHCONT
           <{
             s12 POP
-            s8 s8 XCPU
+            s6 s6 XCPU
             ADD
-            s0 s8 XCHG
+            s0 s6 XCHG
             s0 s11 XCHG
-            s0 s9 XCHG
+            s0 s7 XCHG
           }> PUSHCONT
           IFELSE
           2 GETGLOBVAR
           MYADDR
-          1 3 BLKSWAP
+          s1 s0 s11 XCHG3
           s0 s2 XCHG
           CTOS
           LDDICT
@@ -983,7 +985,7 @@ SETCP0
           5 CALLDICT
           0 PUSHINT
           1000000000 PUSHINT
-          s0 s11 XCHG
+          s0 s9 XCHG
           66 PUSHINT
           s0 s14 XCHG
           NEWC
@@ -997,7 +999,7 @@ SETCP0
           STGRAMS
           ENDC
           4 1 REVERSE
-          s11 s13 s0 XCHG3
+          s9 s13 s0 XCHG3
           PUSHNULL
           PUSHNULL
           NEWC
@@ -1201,7 +1203,9 @@ SETCP0
           ENDC
           s0 s1 XCHG
           SENDRAWMSG
-          1 8 BLKSWAP
+          4 5 REVERSE
+          s3 s6 XCHG
+          3 3 BLKSWAP
         }> CALLREF
         NEWC
         2 GETGLOBVAR

@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { toNano } from 'ton';
+import { fromNano, toNano } from 'ton';
 import { createExecutorFromCode } from 'ton-nodejs';
 import { TonBet, TonBet_init } from './output/sample_TonBet';
 import { randomAddress } from './utils/randomAddress';
@@ -9,14 +9,24 @@ describe('contract', () => {
 
         // Create stateinit
         let owner = randomAddress(0, 'some-owner');
-        let nonOwner = randomAddress(0, 'some-non-owner');
-        let minBet = toNano(10);
+        let playerA = randomAddress(0, 'player-a');
+        let playerB = randomAddress(0, 'player-b');
+        let minBet = toNano(0.1);
         let fee = new BN(5); // 5%
         let init = await TonBet_init(owner, minBet, fee);
         let executor = await createExecutorFromCode(init);
         let contract = new TonBet(executor);
 
-        // Check counter
+        // Send first bets
+        await contract.send({ amount: toNano(10), from: playerA }, 'Bet A');
+        await contract.send({ amount: toNano(10), from: playerB  }, 'Bet B');
+
+        // Check balances
+        let balanceA = await contract.getBalanceA();
+        let balanceB = await contract.getBalanceA();
+        expect(fromNano(balanceA)).toBe('8.55');
+        expect(fromNano(balanceB)).toBe('8.55');
+
         // expect((await contract.getCounter()).toString()).toEqual('0');
 
         // // Increment counter

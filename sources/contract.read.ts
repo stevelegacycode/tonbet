@@ -16,10 +16,14 @@ import { TonBet } from "./output/sample_TonBet";
     let owner = await contract.getOwner();
     let minBet = await contract.getMinBet();
     let fee = await contract.getFee();
+    let stopped = await contract.getStopped();
+    let completed = await contract.getCompleted();
+    console.log('Completed: ' + completed);
+    console.log('Stopped: ' + stopped);
     console.log('Owner: ' + owner.toFriendly({ testOnly: true }));
+    console.log('Fee: ' + fee.toNumber() + '%');
     console.log('Balance A: ' + fromNano(balanceA));
     console.log('Balance B: ' + fromNano(balanceB));
     console.log('Min Bet: ' + fromNano(minBet));
-    console.log('Fee: ' + fee.toNumber() + '%');
 
 })();

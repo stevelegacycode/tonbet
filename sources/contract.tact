@@ -124,15 +124,17 @@ contract TonBet with OwnableTransferable, Stoppable {
 
     fun acceptBet(isA: Bool) {
 
+        // Get context
+        let ctx: Context = context();
+
         // Must not be stopped
         self.requireNotStopped();
 
-        // Check mininum bet
-        let ctx: Context = context();
-        require(ctx.value > self.minBet);
-
-        // Calculate value
+        // Calculate and check bet size
         let workingValue: Int = ctx.value - 1000000000; // 1 TON
+        require(workingValue > self.minBet);
+
+        // Calculate fee
         let value: Int = workingValue - (workingValue * self.fee / 100);
 
         // Update balances
