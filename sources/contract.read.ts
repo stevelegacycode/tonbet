@@ -7,11 +7,11 @@ import { TonBet } from "./output/sample_TonBet";
 
     // Parameters
     console.log('Preparing...');
-    let client = new TonClient4({ endpoint: 'https://testnet-v4.tonhubapi.com' });
+    let client = new TonClient4({ endpoint: 'https://mainnet-v4.tonhubapi.com' });
     let block = (await client.getLastBlock()).last.seqno;
 
     console.log('Loading contract data...');
-    let executor = await createExecutorFromRemote(client, block, Address.parse('kQBStiGpCWbIYaHqV3C0CQNZDB50h78CSXPD5xM58PYV6hvb'));
+    let executor = await createExecutorFromRemote(client, block, Address.parse('EQAmj2J84O3HBDYJhh1VAdTImJ0soWOZ1reDaL0ZY7J0YcUv'));
     let contract = new TonBet(executor);
     let balanceA = await contract.getBalanceA();
     let balanceB = await contract.getBalanceB();
@@ -20,11 +20,13 @@ import { TonBet } from "./output/sample_TonBet";
     let fee = await contract.getFee();
     let stopped = await contract.getStopped();
     let completed = await contract.getCompleted();
+    let balance = executor.balance;
     console.log('Address: ' + executor.address.toFriendly({ testOnly: true }));
     console.log('Completed: ' + completed);
     console.log('Stopped: ' + stopped);
     console.log('Owner: ' + owner.toFriendly({ testOnly: true }));
     console.log('Fee: ' + fee.toNumber() + '%');
+    console.log('Balance: ' + fromNano(balance));
     console.log('Balance A: ' + fromNano(balanceA));
     console.log('Balance B: ' + fromNano(balanceB));
     console.log('Min Bet: ' + fromNano(minBet));
