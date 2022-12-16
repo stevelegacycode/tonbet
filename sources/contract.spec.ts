@@ -1,11 +1,12 @@
 import BN from 'bn.js';
 import { fromNano, toNano } from 'ton';
 import { createExecutorFromCode } from 'ton-nodejs';
+import { BetHolder, BetHolder_init } from './output/sample_BetHolder';
 import { TonBet, TonBet_init } from './output/sample_TonBet';
 import { randomAddress } from './utils/randomAddress';
 
 describe('contract', () => {
-    it('should deploy correctly', async () => {
+    it('should deploy and accept bets on master', async () => {
 
         // Create stateinit
         let owner = randomAddress(0, 'some-owner');
@@ -19,23 +20,27 @@ describe('contract', () => {
 
         // Send first bets
         await contract.send({ amount: toNano(10), from: playerA }, 'Bet A');
-        await contract.send({ amount: toNano(10), from: playerB  }, 'Bet B');
+        await contract.send({ amount: toNano(10), from: playerB }, 'Bet B');
 
         // Check balances
         let balanceA = await contract.getBalanceA();
         let balanceB = await contract.getBalanceA();
         expect(fromNano(balanceA)).toBe('8.55');
         expect(fromNano(balanceB)).toBe('8.55');
+    });
 
-        // expect((await contract.getCounter()).toString()).toEqual('0');
+    it('should deploy and accept bets on holder', async () => {
 
-        // // Increment counter
-        // await contract.send({ amount: toNano(1), from: owner }, 'increment');
+        let master = randomAddress(0, 'master');
+        let playerA = randomAddress(0, 'player-a');
+        let playerB = randomAddress(0, 'player-b');
+        let init = await BetHolder_init(master, playerA);
+        let executor = await createExecutorFromCode(init);
+        let contract = new BetHolder(executor);
 
-        // // Check counter
-        // expect((await contract.getCounter()).toString()).toEqual('1');
-
-        // // Non-owner
-        // await expect(() => contract.send({ amount: toNano(1), from: nonOwner }, 'increment')).rejects.toThrowError('Constraints error');
+        // Send first bets
+        await contract.send({ amount: toNano(10), from: master }, { $$type: 'TopUp', valueA: toNano(10), valueB: toNano(0) });
+        await contract.getBalanceA();
+        await contract.getBalanceB();
     });
 });

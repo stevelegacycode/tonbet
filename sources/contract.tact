@@ -49,7 +49,7 @@ contract BetHolder with Ownable {
         nativeReserve(10000000, 0);
 
         // Send cashback to owner
-        simpleSend(self.owner, 0, 64 + 2); // Remaining value + ignore errors (not recoverable anyway)
+        simpleSend(self.owner, 0, 128 + 2); // Remaining balance + ignore errors (not recoverable anyway)
     }
 
     receive(msg: Withdraw) {
@@ -94,7 +94,7 @@ contract BetHolder with Ownable {
     }
 
     get fun balanceB(): Int {
-        return self.balanceA;
+        return self.balanceB;
     }
 }
 
@@ -154,8 +154,10 @@ contract TonBet with OwnableTransferable, Stoppable {
         send(SendParameters{
             value: 1000000000, // 1 TON 
             to: holderAddress, 
-            mode: 64 + 2, // Remaining value + ignore errors (not recoverable anyway)
+            mode: 2, // Remaining value + ignore errors (not recoverable anyway)
             bounce: false,
+            code: holderInit.code,
+            data: holderInit.data,
             body: abi.pack_cell(TopUp{
                 valueA: topUpA,
                 valueB: topUpB
@@ -237,6 +239,8 @@ contract TonBet with OwnableTransferable, Stoppable {
             to: holderAddress, 
             mode: 64 + 2, // Renaining value + ignore errors (not recoverable anyway)
             bounce: false,
+            code: holderInit.code,
+            data: holderInit.data,
             body: abi.pack_cell(Withdraw{
                 wonA: self.teamAwon,
                 wonB: !self.teamAwon
@@ -289,7 +293,8 @@ contract TonBet with OwnableTransferable, Stoppable {
     }
 
     receive() {
-        require(false); // For deployments
+        // Deployments and just empty messages
+        simpleReply(0, 64 + 2); // Remaining value + ignore errors (not recoverable anyway)
     }
 
     //

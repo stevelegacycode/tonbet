@@ -185,7 +185,7 @@ _ __gen_get_balanceA() method_id(97178) {
 
 int __gen_BetHolder_balanceB((slice, slice, int, int, int) self) impure inline {
     var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
-    return self'balanceA;
+    return self'balanceB;
 }
 
 _ __gen_get_balanceB() method_id(84985) {
@@ -214,7 +214,7 @@ _ __gen_get_owner() method_id(83229) {
     self'balanceA = (self'balanceA + msg'valueA);
     self'balanceB = (self'balanceB + msg'valueB);
     raw_reserve(10000000, 0);
-    simpleSend(self'owner, 0, (64 + 2));
+    simpleSend(self'owner, 0, (128 + 2));
     return ((self'owner, self'master, self'balanceA, self'balanceB, self'completed), ());
 }
 

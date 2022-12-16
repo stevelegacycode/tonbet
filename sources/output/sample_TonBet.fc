@@ -261,7 +261,7 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) inline {
     }
     var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), ctx'sender);
     slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
-    send((false, holderAddress, 1000000000, (64 + 2), __gen_writecell_TopUp((topUpA, topUpB)), null(), null()));
+    send((false, holderAddress, 1000000000, 2, __gen_writecell_TopUp((topUpA, topUpB)), holderInit'code, holderInit'data));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
@@ -454,7 +454,7 @@ _ __gen_get_stopped() method_id(74107) {
     require((ctx'value > 1000000000));
     var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), ctx'sender);
     slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
-    send((false, holderAddress, 0, (64 + 2), __gen_writecell_Withdraw((self'teamAwon, (~ self'teamAwon))), null(), null()));
+    send((false, holderAddress, 0, (64 + 2), __gen_writecell_Withdraw((self'teamAwon, (~ self'teamAwon))), holderInit'code, holderInit'data));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
@@ -495,7 +495,7 @@ _ __gen_get_stopped() method_id(74107) {
 
 (((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
-    require(false);
+    simpleReply(0, (64 + 2));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 

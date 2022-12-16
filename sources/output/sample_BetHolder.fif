@@ -285,7 +285,7 @@ PROGRAM{
     __gen_BetHolder_balanceA INLINECALLDICT
   }>
   __gen_BetHolder_balanceB PROCINLINE:<{
-    s2 s4 XCHG
+    s1 s4 XCHG
     4 BLKDROP
   }>
   __gen_get_balanceB PROC:<{
@@ -318,7 +318,7 @@ PROGRAM{
     RAWRESERVE
     s4 PUSH
     0 PUSHINT
-    66 PUSHINT
+    130 PUSHINT
     simpleSend INLINECALLDICT
     SWAP
   }>

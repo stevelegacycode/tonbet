@@ -14,7 +14,7 @@ export function printHeader(name: string) {
 
 export function printAddress(address: Address, testnet: boolean = true) {
     console.log("Address: " + address.toFriendly({ testOnly: testnet }));
-    console.log("Explorer: " + "https://" + (testnet ? 'testnet.' : '') + "tonwhales.com/explorer/address/" + address.toFriendly({ testOnly: testnet }));
+    console.log("Explorer: " + "https://" + (testnet ? 'tontestnet.com' : 'tonwhales.com') + "/explorer/address/" + address.toFriendly({ testOnly: testnet }));
     printSeparator();
 }
 

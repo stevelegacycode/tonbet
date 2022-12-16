@@ -90,7 +90,7 @@ SETCP0
       RAWRESERVE
       s4 PUSH
       0 PUSHINT
-      66 PUSHINT
+      130 PUSHINT
       0 PUSHINT
       3 1 BLKSWAP
       PUSHNULL
@@ -670,7 +670,7 @@ SETCP0
     1 LDI
     5 1 BLKSWAP
     1 5 BLKDROP2
-    s2 s4 XCHG
+    s1 s4 XCHG
     4 BLKDROP
 
   97178: 

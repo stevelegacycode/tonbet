@@ -437,7 +437,218 @@ SETCP0
       9 1 BLKSWAP
       1 9 BLKDROP2
       0 PUSHINT
-      131 THROWIFNOT
+      66 PUSHINT
+      1 GETGLOBVAR
+      3 UNTUPLE
+      s0 POP
+      s1 POP
+      ROTREV
+      0 PUSHINT
+      3 1 BLKSWAP
+      PUSHNULL
+      PUSHNULL
+      PUSHNULL
+      NEWC
+      1 PUSHINT
+      s0 s1 XCHG
+      2 STI
+      s1 s7 XCHG
+      1 STI
+      0 PUSHINT
+      s0 s1 XCHG
+      3 STI
+      s0 s5 XCHG2
+      STSLICER
+      s0 s3 XCHG2
+      STGRAMS
+      0 PUSHINT
+      s0 s1 XCHG
+      105 STI
+      s3 PUSH
+      ISNULL
+      NOT
+      s5 PUSH
+      ISNULL
+      NOT
+      OR
+      <{
+        s3 POP
+        s3 POP
+        s0 s1 XCHG
+        0 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+      }> PUSHCONT
+      <{
+        -1 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+        NEWC
+        0 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+        0 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+        s4 PUSH
+        ISNULL
+        NOT
+        <{
+          -1 PUSHINT
+          <{
+            -1 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          <{
+            0 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          IFELSE
+          s1 s4 XCHG
+          STREF
+        }> PUSHCONT
+        <{
+          s4 POP
+          s0 s3 XCHG
+          0 PUSHINT
+          <{
+            -1 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          <{
+            0 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          IFELSE
+        }> PUSHCONT
+        IFELSE
+        s4 PUSH
+        ISNULL
+        NOT
+        <{
+          -1 PUSHINT
+          <{
+            -1 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          <{
+            0 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          IFELSE
+          s1 s4 XCHG
+          STREF
+        }> PUSHCONT
+        <{
+          s4 POP
+          s0 s3 XCHG
+          0 PUSHINT
+          <{
+            -1 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          <{
+            0 PUSHINT
+            s0 s1 XCHG
+            1 STI
+          }> PUSHCONT
+          IFELSE
+        }> PUSHCONT
+        IFELSE
+        0 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+        s0 s2 XCHG
+        -1 PUSHINT
+        <{
+          -1 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+          s0 s1 XCHG
+          1 STI
+        }> PUSHCONT
+        IFELSE
+        s0 s2 XCHG
+        ENDC
+        ROT
+        STREF
+      }> IFREFELSE
+      s1 PUSH
+      ISNULL
+      NOT
+      <{
+        -1 PUSHINT
+        s0 s1 XCHG
+        1 STI
+        s0 s1 XCHG
+        1 CALLDICT
+        s0 s1 XCHG
+        STREF
+      }> PUSHCONT
+      <{
+        0 PUSHINT
+        s2 POP
+        1 STI
+      }> PUSHCONT
+      IFELSE
+      ENDC
+      s0 s1 XCHG
+      SENDRAWMSG
       NEWC
       2 GETGLOBVAR
       s0 s1 XCHG
@@ -633,13 +844,13 @@ SETCP0
           1 STI
           ENDC
           0 PUSHINT
-          ROTREV
+          s2 s1 PUSH2
           5 CALLDICT
           0 PUSHINT
           1000000000 PUSHINT
-          s0 s9 XCHG
-          66 PUSHINT
-          s0 s14 XCHG
+          s0 s11 XCHG
+          2 PUSHINT
+          s0 s16 XCHG
           NEWC
           ROTREV
           2882324798 PUSHINT
@@ -650,10 +861,10 @@ SETCP0
           s0 s1 XCHG
           STGRAMS
           ENDC
-          4 1 REVERSE
-          s9 s13 s0 XCHG3
-          PUSHNULL
-          PUSHNULL
+          s5 s6 s0 XCHG3
+          s4 s11 XCHG
+          s3 s15 XCHG
+          s0 s11 s15 XCHG3
           NEWC
           1 PUSHINT
           s0 s1 XCHG
@@ -858,6 +1069,7 @@ SETCP0
           4 5 REVERSE
           s3 s6 XCHG
           3 3 BLKSWAP
+          s1 s2 XCHG
         }> CALLREF
         NEWC
         2 GETGLOBVAR
@@ -981,13 +1193,13 @@ SETCP0
           1 STI
           ENDC
           0 PUSHINT
-          ROTREV
+          s2 s1 PUSH2
           5 CALLDICT
           0 PUSHINT
           1000000000 PUSHINT
-          s0 s9 XCHG
-          66 PUSHINT
-          s0 s14 XCHG
+          s0 s11 XCHG
+          2 PUSHINT
+          s0 s16 XCHG
           NEWC
           ROTREV
           2882324798 PUSHINT
@@ -998,10 +1210,10 @@ SETCP0
           s0 s1 XCHG
           STGRAMS
           ENDC
-          4 1 REVERSE
-          s9 s13 s0 XCHG3
-          PUSHNULL
-          PUSHNULL
+          s5 s6 s0 XCHG3
+          s4 s11 XCHG
+          s3 s15 XCHG
+          s0 s11 s15 XCHG3
           NEWC
           1 PUSHINT
           s0 s1 XCHG
@@ -1206,6 +1418,7 @@ SETCP0
           4 5 REVERSE
           s3 s6 XCHG
           3 3 BLKSWAP
+          s1 s2 XCHG
         }> CALLREF
         NEWC
         2 GETGLOBVAR
@@ -1303,14 +1516,14 @@ SETCP0
           1 STI
           ENDC
           0 PUSHINT
-          ROTREV
+          s2 s1 PUSH2
           5 CALLDICT
           0 PUSHINT
           0 PUSHINT
           66 PUSHINT
-          s5 PUSH
+          s7 PUSH
           NOT
-          s6 s-1 PUXC
+          s8 s-1 PUXC
           NEWC
           ROTREV
           1286094280 PUSHINT
@@ -1319,9 +1532,8 @@ SETCP0
           1 STI
           1 STI
           ENDC
-          s3 s4 XCHG
-          PUSHNULL
-          PUSHNULL
+          4 3 REVERSE
+          s0 s3 s4 XCHG3
           NEWC
           1 PUSHINT
           s0 s1 XCHG
