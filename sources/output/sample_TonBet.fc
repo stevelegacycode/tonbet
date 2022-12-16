@@ -445,7 +445,19 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_f5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_acceptBet(true);
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
 ((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_acceptBet(false);
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_acceptBet(false);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
@@ -497,7 +509,19 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(true);
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
 ((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(false);
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
+((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(false);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
@@ -582,10 +606,26 @@ _ __gen_get_stopped() method_id(74107) {
             return ();
         }
         
+        ;; Receive "Argentina" message
+        if (text_op == 0xf5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a) {
+            var self = __gen_load_TonBet();
+            self~__gen_TonBet_receive_comment_f5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a();
+            __gen_store_TonBet(self);
+            return ();
+        }
+        
         ;; Receive "Bet B" message
         if (text_op == 0xb387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67) {
             var self = __gen_load_TonBet();
             self~__gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67();
+            __gen_store_TonBet(self);
+            return ();
+        }
+        
+        ;; Receive "France" message
+        if (text_op == 0x628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6) {
+            var self = __gen_load_TonBet();
+            self~__gen_TonBet_receive_comment_628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6();
             __gen_store_TonBet(self);
             return ();
         }
@@ -614,10 +654,26 @@ _ __gen_get_stopped() method_id(74107) {
             return ();
         }
         
+        ;; Receive "Argentina won" message
+        if (text_op == 0x252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9) {
+            var self = __gen_load_TonBet();
+            self~__gen_TonBet_receive_comment_252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9();
+            __gen_store_TonBet(self);
+            return ();
+        }
+        
         ;; Receive "Team B won" message
         if (text_op == 0x05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310) {
             var self = __gen_load_TonBet();
             self~__gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310();
+            __gen_store_TonBet(self);
+            return ();
+        }
+        
+        ;; Receive "France won" message
+        if (text_op == 0x88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de) {
+            var self = __gen_load_TonBet();
+            self~__gen_TonBet_receive_comment_88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de();
             __gen_store_TonBet(self);
             return ();
         }
@@ -649,5 +705,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmNPPMxsdwtx1uGK2XtW93gMow1DBFwe54tFEvEkukoWJN";
+    return "ipfs://Qmb2fM9YtJ3f7L5VNabg7JiTP1J37vqQxRHRHke2tyVMwP";
 }

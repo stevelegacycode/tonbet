@@ -54,12 +54,16 @@ PROGRAM{
   DECLPROC __gen_TonBet_stopped
   74107 DECLMETHOD __gen_get_stopped
   DECLPROC __gen_TonBet_receive_comment_f42180616e67f54f134d14dfcf9ce09a4a0c44b773f6c444d162296df65759b5
+  DECLPROC __gen_TonBet_receive_comment_f5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a
   DECLPROC __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67
+  DECLPROC __gen_TonBet_receive_comment_628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6
   DECLPROC __gen_TonBet_receive_comment_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca
   DECLPROC __gen_TonBet_receive_WithdrawResponse
   DECLPROC __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466
   DECLPROC __gen_TonBet_receive_comment_57148b01be381e215dc587724cf394c39d04918f69160d08f48c0cc5860c9a9f
+  DECLPROC __gen_TonBet_receive_comment_252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9
   DECLPROC __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310
+  DECLPROC __gen_TonBet_receive_comment_88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de
   DECLPROC __gen_TonBet_receive
   DECLPROC __gen_TonBet_receive_ChangeOwner
   DECLPROC __gen_TonBet_receive_comment_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f
@@ -655,7 +659,15 @@ PROGRAM{
     TRUE
     __gen_TonBet_acceptBet INLINECALLDICT
   }>
+  __gen_TonBet_receive_comment_f5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a PROCINLINE:<{
+    TRUE
+    __gen_TonBet_acceptBet INLINECALLDICT
+  }>
   __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 PROCINLINE:<{
+    FALSE
+    __gen_TonBet_acceptBet INLINECALLDICT
+  }>
+  __gen_TonBet_receive_comment_628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6 PROCINLINE:<{
     FALSE
     __gen_TonBet_acceptBet INLINECALLDICT
   }>
@@ -751,7 +763,15 @@ PROGRAM{
     TRUE
     __gen_TonBet_teamWon INLINECALLDICT
   }>
+  __gen_TonBet_receive_comment_252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9 PROCINLINE:<{
+    TRUE
+    __gen_TonBet_teamWon INLINECALLDICT
+  }>
   __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 PROCINLINE:<{
+    FALSE
+    __gen_TonBet_teamWon INLINECALLDICT
+  }>
+  __gen_TonBet_receive_comment_88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de PROCINLINE:<{
     FALSE
     __gen_TonBet_teamWon INLINECALLDICT
   }>
@@ -870,12 +890,32 @@ PROGRAM{
         RETALT
       }>
       DUP
+      111216062136213284953462802046600174109028010442048812457804903652269236326698 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        __gen_load_TonBet INLINECALLDICT
+        __gen_TonBet_receive_comment_f5e20f794f0b63ae38ff95defdaf167e45ffbe59dc5f7351897301a449fe912a INLINECALLDICT
+        __gen_store_TonBet INLINECALLDICT
+        RETALT
+      }>
+      DUP
       81204077081974882658923887945395350221599949520826911470848790444720908905831 PUSHINT
       EQUAL
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
         __gen_TonBet_receive_comment_b387e0fdbbcb0d5e43a359a67ddf2989989956e86406284e3ad5aea2d85bad67 INLINECALLDICT
+        __gen_store_TonBet INLINECALLDICT
+        RETALT
+      }>
+      DUP
+      44576388776780187497133432170022757596503209346991463380454662456472574276326 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        __gen_load_TonBet INLINECALLDICT
+        __gen_TonBet_receive_comment_628d578a433e37b83211570c6f618f745886dbfeb1f9bd6ea7d346b8fecab2e6 INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -910,12 +950,32 @@ PROGRAM{
         RETALT
       }>
       DUP
+      16815232204314836577849135534402110593663506274602697783218247030530173543129 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        __gen_load_TonBet INLINECALLDICT
+        __gen_TonBet_receive_comment_252d158b2cc0df1c5e71ccd598c67452b8463f7d6fceba58bc1557c73733a2d9 INLINECALLDICT
+        __gen_store_TonBet INLINECALLDICT
+        RETALT
+      }>
+      DUP
       2648449067491660979547953952041065043977364828256939908392469498958509486864 PUSHINT
       EQUAL
       IFJMP:<{
         DROP
         __gen_load_TonBet INLINECALLDICT
         __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310 INLINECALLDICT
+        __gen_store_TonBet INLINECALLDICT
+        RETALT
+      }>
+      DUP
+      61943751987220997628852837751426069026796789175973417430458140571138390876638 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        __gen_load_TonBet INLINECALLDICT
+        __gen_TonBet_receive_comment_88f2ebd2ad333c89078f3a3681a1d299bdd38fd5e263f33660e8aabed41de1de INLINECALLDICT
         __gen_store_TonBet INLINECALLDICT
         RETALT
       }>
@@ -943,6 +1003,6 @@ PROGRAM{
     192989407141549587419771644724066226057 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d4e50504d7873647774783175474b325874573933674d6f77314442467765353474464576456b756b6f574a4e} PUSHSLICE
+    x{697066733a2f2f516d6232664d3959744a3366374c35564e616267374a695450314a333776715178524852486b65327479564d7750} PUSHSLICE
   }>
 }END>c

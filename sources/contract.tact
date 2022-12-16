@@ -224,7 +224,15 @@ contract TonBet with OwnableTransferable, Stoppable {
         self.acceptBet(true);
     }
 
+    receive("Argentina") {
+        self.acceptBet(true);
+    }
+
     receive("Bet B") {
+        self.acceptBet(false);
+    }
+
+    receive("France") {
         self.acceptBet(false);
     }
 
@@ -300,7 +308,15 @@ contract TonBet with OwnableTransferable, Stoppable {
         self.teamWon(true);
     }
 
+    receive("Argentina won") {
+        self.teamWon(true);
+    }
+
     receive("Team B won") {
+        self.teamWon(false);
+    }
+
+    receive("France won") {
         self.teamWon(false);
     }
 

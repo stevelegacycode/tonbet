@@ -516,7 +516,15 @@
     },
     {
       "kind": "internal-comment",
+      "comment": "Argentina"
+    },
+    {
+      "kind": "internal-comment",
       "comment": "Bet B"
+    },
+    {
+      "kind": "internal-comment",
+      "comment": "France"
     },
     {
       "kind": "internal-comment",
@@ -536,7 +544,15 @@
     },
     {
       "kind": "internal-comment",
+      "comment": "Argentina won"
+    },
+    {
+      "kind": "internal-comment",
       "comment": "Team B won"
+    },
+    {
+      "kind": "internal-comment",
+      "comment": "France won"
     },
     {
       "kind": "internal-empty"
