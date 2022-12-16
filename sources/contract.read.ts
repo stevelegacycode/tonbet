@@ -11,7 +11,7 @@ import { TonBet } from "./output/sample_TonBet";
     let block = (await client.getLastBlock()).last.seqno;
 
     console.log('Loading contract data...');
-    let executor = await createExecutorFromRemote(client, block, Address.parse('kQBpZr0qXIsKuGdv91Nq9u5WEtSxqg_Oq7tX1WqWlm0g_G6S'));
+    let executor = await createExecutorFromRemote(client, block, Address.parse('kQCyy3KcZ9tGjoYWz9_l-iL8f-_PAsvmQJ7zKweFO19yt_hP'));
     let contract = new TonBet(executor);
     let balanceA = await contract.getBalanceA();
     let balanceB = await contract.getBalanceB();
@@ -31,17 +31,21 @@ import { TonBet } from "./output/sample_TonBet";
     console.log('Loading participatns data...');
     let participans: Address[] = [];
     participans.push(Address.parse('kQD6oPnzaaAMRW24R8F0_nlSsJQni0cGHntR027eT9_sgtwt'));
-    participans.push(Address.parse('EQB74ererQXuWClKBzI-LUHYxBtFbxHlwRb_k67I7TEdmYPL'));
+    participans.push(Address.parse('kQBicYUqh1j9Lnqv9ZhECm0XNPaB7_HcwoBb3AJnYYfqB8S1'));
     for (let a of participans) {
         let target = await contract.getParticipantAddress(a);
         console.log('For ' + a.toFriendly({ testOnly: true }));
         console.log('Contract ' + target.toFriendly({ testOnly: true }));
         let holderExecutor = await createExecutorFromRemote(client, block, target);
         let holder = new BetHolder(holderExecutor);
+        let completed = await holder.getCompleted();
         let ba = await holder.getBalanceA();
         let bb = await holder.getBalanceB();
+        let won = await contract.getWon(ba, bb);
+        console.log('Completed: ' + completed);
         console.log('Balance A: ' + fromNano(ba));
         console.log('Balance B: ' + fromNano(bb));
+        console.log('Won: ' + fromNano(won));
     }
 
 })();

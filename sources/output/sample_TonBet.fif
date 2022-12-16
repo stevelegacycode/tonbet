@@ -659,7 +659,7 @@ PROGRAM{
     require INLINECALLDICT
     SWAP
     1000000000 PUSHINT
-    GREATER
+    GEQ
     require INLINECALLDICT
     __tact_context_sys GETGLOB
     MYADDR
@@ -718,6 +718,8 @@ PROGRAM{
     DUP
     0 GTINT
     IF:<{
+      1000000 PUSHINT
+      ADD
       0 PUSHINT
       RAWRESERVE
     }>ELSE<{

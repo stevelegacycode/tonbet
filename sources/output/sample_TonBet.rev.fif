@@ -1477,7 +1477,7 @@ SETCP0
           131 THROWIFNOT
           s0 s1 XCHG
           1000000000 PUSHINT
-          GREATER
+          GEQ
           131 THROWIFNOT
           2 GETGLOBVAR
           MYADDR
@@ -1797,6 +1797,8 @@ SETCP0
         s0 PUSH
         0 GTINT
         <{
+          1000000 PUSHINT
+          ADD
           0 PUSHINT
           RAWRESERVE
         }> PUSHCONT

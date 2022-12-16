@@ -451,10 +451,11 @@ _ __gen_get_stopped() method_id(74107) {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
     require(self'completed);
-    require((ctx'value > 1000000000));
+    require((ctx'value >= 1000000000));
     var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), ctx'sender);
     slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
-    send((false, holderAddress, 0, (64 + 2), __gen_writecell_Withdraw((self'teamAwon, (~ self'teamAwon))), holderInit'code, holderInit'data));
+    int mode = 64;
+    send((false, holderAddress, 0, (mode + 2), __gen_writecell_Withdraw((self'teamAwon, (~ self'teamAwon))), holderInit'code, holderInit'data));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
@@ -475,7 +476,7 @@ _ __gen_get_stopped() method_id(74107) {
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
     int locked = (self'balanceA + self'balanceB);
     if ((locked > 0)) {
-        raw_reserve(locked, 0);
+        raw_reserve((locked + 1000000), 0);
     }
     simpleReply(0, (128 + 2));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());

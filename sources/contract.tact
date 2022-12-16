@@ -229,15 +229,16 @@ contract TonBet with OwnableTransferable, Stoppable {
         // Must be completed
         let ctx: Context = context();
         require(self.completed);
-        require(ctx.value > 1000000000); // 1 TON
+        require(ctx.value >= 1000000000); // 1 TON
 
         // Request from holder
         let holderInit: StateInit = initOf BetHolder(myAddress(), ctx.sender);
         let holderAddress: Address = contractAddress(0, holderInit.code, holderInit.data);
+        let mode: Int = 64;
         send(SendParameters{
             value: 0, 
             to: holderAddress, 
-            mode: 64 + 2, // Renaining value + ignore errors (not recoverable anyway)
+            mode: mode + 2, // Renaining value + ignore errors (not recoverable anyway)
             bounce: false,
             code: holderInit.code,
             data: holderInit.data,
@@ -276,7 +277,7 @@ contract TonBet with OwnableTransferable, Stoppable {
         // Detect locked values
         let locked: Int = self.balanceA + self.balanceB;
         if (locked > 0) {
-            nativeReserve(locked, 0);
+            nativeReserve(locked + 1000000, 0);
         }
 
         // Send response
