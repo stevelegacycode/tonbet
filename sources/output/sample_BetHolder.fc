@@ -150,6 +150,17 @@ cell __gen_BetHolder_init(cell sys', slice master, slice owner) inline {
     return b'.end_cell();
 }
 
+int __gen_BetHolder_completed((slice, slice, int, int, int) self) impure inline {
+    var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
+    return self'completed;
+}
+
+_ __gen_get_completed() method_id(79554) {
+    var self = __gen_load_BetHolder();
+    var res = __gen_BetHolder_completed(self);
+    return res;
+}
+
 slice __gen_BetHolder_master((slice, slice, int, int, int) self) impure inline {
     var ((self'owner, self'master, self'balanceA, self'balanceB, self'completed)) = self;
     return self'master;
@@ -276,5 +287,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmPiKZ5ifq9eX2QsxQzbabJRvmE2FmGXmNVx4M2SicccGh";
+    return "ipfs://Qmd1gF1qJsjPuLbtcUPxQMmT31GRJtYxib7qHHu9cHPwXz";
 }

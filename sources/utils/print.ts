@@ -26,23 +26,36 @@ export function printDeploy(init: { code: Cell, data: Cell }, amount: BN, comman
     // Resovle init
     let cell = new Cell();
     new StateInit(init).writeTo(cell);
-    let initStr = cell.toBoc({ idx: false }).toString("base64");
+    let initStr = toUrlSafe(cell.toBoc({ idx: false }).toString("base64"));
 
     let link: string;
     if (typeof command === 'string') {
-        link = `https://${testnet ? 'test.' : ''}tonhub.com/transfer/` + to.toFriendly({ testOnly: testnet }) + "?" + qs.stringify({
+        link = `https://app.tonkeeper.com/transfer/` + to.toFriendly({ testOnly: testnet }) + "?" + qs.stringify({
             text: command,
             amount: amount.toString(10),
             init: initStr
         });
     } else {
-        link = `https://${testnet ? 'test.' : ''}tonhub.com/transfer/` + to.toFriendly({ testOnly: testnet }) + "?" + qs.stringify({
+        link = `https://app.tonkeeper.com/transfer/` + to.toFriendly({ testOnly: testnet }) + "?" + qs.stringify({
             text: "Deploy contract",
             amount: amount.toString(10),
             init: initStr,
-            bin: command.toBoc({ idx: false }).toString('base64'),
+            bin: toUrlSafe(command.toBoc({ idx: false }).toString('base64')),
         });
     }
     console.log("Deploy: " + link);
     printSeparator();
+}
+
+function toUrlSafe(src: string) {
+    while (src.indexOf('/') >= 0) {
+        src = src.replace('/', '_');
+    }
+    while (src.indexOf('+') >= 0) {
+        src = src.replace('+', '-');
+    }
+    while (src.indexOf('=') >= 0) {
+        src = src.replace('=', '');
+    }
+    return src;
 }

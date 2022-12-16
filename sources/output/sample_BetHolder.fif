@@ -17,6 +17,8 @@ PROGRAM{
   DECLPROC send
   DECLPROC simpleSend
   DECLPROC __gen_BetHolder_init
+  DECLPROC __gen_BetHolder_completed
+  79554 DECLMETHOD __gen_get_completed
   DECLPROC __gen_BetHolder_master
   120253 DECLMETHOD __gen_get_master
   DECLPROC __gen_BetHolder_balanceA
@@ -259,6 +261,13 @@ PROGRAM{
     __gen_write_BetHolder INLINECALLDICT
     ENDC
   }>
+  __gen_BetHolder_completed PROCINLINE:<{
+    4 1 BLKDROP2
+  }>
+  __gen_get_completed PROC:<{
+    __gen_load_BetHolder INLINECALLDICT
+    __gen_BetHolder_completed INLINECALLDICT
+  }>
   __gen_BetHolder_master PROCINLINE:<{
     s3 s4 XCHG
     4 BLKDROP
@@ -415,6 +424,6 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d50694b5a3569667139655832517378517a6261624a52766d4532466d47586d4e5678344d3253696363634768} PUSHSLICE
+    x{697066733a2f2f516d6431674631714a736a50754c627463555078514d6d54333147524a745978696237714848753963485077587a} PUSHSLICE
   }>
 }END>c

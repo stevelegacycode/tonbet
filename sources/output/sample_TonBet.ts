@@ -327,9 +327,9 @@ export function unpackTupleWithdrawResponse(slice: TupleSlice4): WithdrawRespons
     return { $$type: 'WithdrawResponse', owner: owner, valueA: valueA, valueB: valueB };
 }
 export async function TonBet_init(owner: Address, minBet: BN, fee: BN) {
-    const __code = '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';
+    const __code = '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';
     const depends = new Map<string, Cell>();
-    depends.set('63785', Cell.fromBoc(Buffer.from('te6ccgECFwEAA48AART/APSkE/S88sgLAQIBYgIDAgLPBAUCASANDgLxHAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QDBUQRVvA/hhApFb4CCCEKvMyT66jrYw7UTQ1AH4YvpAAQH6QAEB+gD6ANIAVUBsFQXTHwGCEKvMyT668uCB+gD6AFkyEFYQRRA0QwDgghBMqD3IuuMCMPLAgoAYHAAsIG7y0ICAC5PhBbyMwMSbHBfLggyKz8uCDUESgUCOgggiYloBw+wIkcIBCcFUgbW1tyHEBygEXygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsZ8zMwFwlH8BygCUcAHKAOLjDSFus5l/AcoAAfABAcyUcDLKAOLJAfsAAQsIAaDtRNDUAfhi+kABAfpAAQH6APoA0gBVQGwVBdMfAYIQTKg9yLry4IHSANIAWTIQVhBFEDRDANs8yPhCAcxVQFBUzxZYzxYB+gJY+gLKAMntVAkAMsj4QgHMVUBQVM8WWM8WAfoCWPoCygDJ7VQBfFv4QW8jMDEkxwXy4INwUwGzlV8DXH9Z3nBwgQCCVElUyFUgghDPttd2UATLH1jPFgH6AgH6AslUEwdVIG1tCgGQyHEBygEXygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsZ8zMwFwlH8BygCUcAHKAOLjDSFus5l/AcoAAfABAcyUcDLKAOLJAfsACwHuf5R/AcoAlHABygDiyHCUfwHKAJRwAcoA4nCUfwHKAJRwAcoA4iRus55/lH8BygCUcAHKAOIUzJ40A3CUfwHKAJRwAcoA4uIkbrOef5R/AcoAlHABygDiFMyeNANwlH8BygCUcAHKAOLicJR/AcoAlHABygDiAn8MAB6UfwHKAJRwAcoA4gLJWMwCAVgPEAIBIBMUAgFIERIAP7dzXaiaGoA/DF9IACA/SAAgP0AfQBpACqgNgqIEi+CQADuujvaiaGoA/DF9IACA/SAAgP0AfQBpACqgNgqvgkAAP6389qJoagD8MX0gAID9IACA/QB9AGkAKqA2CogSL4JAAHG7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnBAznVp5xX50lCwHWFuJkeygCAWYVFgA/rt72omhqAPwxfSAAgP0gAID9AH0AaQAqoDYKiBovgkAAN66HuBA4AuRmAogaKCpniyxniwD9ASx9AWUAZMA=', 'base64'))[0]);
+    depends.set('63785', Cell.fromBoc(Buffer.from('te6ccgECGQEAA7QAART/APSkE/S88sgLAQIBYgIDAgLPBAUCASANDgLxHAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QDBUQRVvA/hhApFb4CCCEKvMyT66jrYw7UTQ1AH4YvpAAQH6QAEB+gD6ANIAVUBsFQXTHwGCEKvMyT668uCB+gD6AFkyEFYQRRA0QwDgghBMqD3IuuMCMPLAgoAYHAAsIG7y0ICAC5PhBbyMwMSbHBfLggyKz8uCDUESgUCOgggiYloBw+wIkcIBCcFUgbW1tyHEBygEXygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsZ8zMwFwlH8BygCUcAHKAOLjDSFus5l/AcoAAfABAcyUcDLKAOLJAfsAAQsIAaDtRNDUAfhi+kABAfpAAQH6APoA0gBVQGwVBdMfAYIQTKg9yLry4IHSANIAWTIQVhBFEDRDANs8yPhCAcxVQFBUzxZYzxYB+gJY+gLKAMntVAkAMsj4QgHMVUBQVM8WWM8WAfoCWPoCygDJ7VQBfFv4QW8jMDEkxwXy4INwUwGzlV8DXH9Z3nBwgQCCVElUyFUgghDPttd2UATLH1jPFgH6AgH6AslUEwdVIG1tCgGQyHEBygEXygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsZ8zMwFwlH8BygCUcAHKAOLjDSFus5l/AcoAAfABAcyUcDLKAOLJAfsACwHuf5R/AcoAlHABygDiyHCUfwHKAJRwAcoA4nCUfwHKAJRwAcoA4iRus55/lH8BygCUcAHKAOIUzJ40A3CUfwHKAJRwAcoA4uIkbrOef5R/AcoAlHABygDiFMyeNANwlH8BygCUcAHKAOLicJR/AcoAlHABygDiAn8MAB6UfwHKAJRwAcoA4gLJWMwCASAPEAIBIBUWADu7bC7UTQ1AH4YvpAAQH6QAEB+gD6ANIAVUBsFWxBgCASAREgIBSBMUAD+3c12omhqAPwxfSAAgP0gAID9AH0AaQAqoDYKiBIvgkAA7ro72omhqAPwxfSAAgP0gAID9AH0AaQAqoDYKr4JAAD+t/PaiaGoA/DF9IACA/SAAgP0AfQBpACqgNgqIEi+CQABxu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwQM51aecV+dJQsB1hbiZHsoAgFmFxgAP67e9qJoagD8MX0gAID9IACA/QB9AGkAKqA2CogaL4JAADeuh7gQOALkZgKIGigqZ4ssZ4sA/QEsfQFlAGTA', 'base64'))[0]);
     let systemCell = beginCell().storeDict(serializeDict(depends, 16, (src, v) => v.refs.push(src))).endCell();
     let __stack: StackItem[] = [];
     __stack.push({ type: 'cell', cell: systemCell });
@@ -371,7 +371,7 @@ export class TonBet {
     readonly executor: ContractExecutor; 
     constructor(executor: ContractExecutor) { this.executor = executor; } 
     
-    async send(args: { amount: BN, from?: Address, debug?: boolean }, message: 'Bet A' | 'Bet B' | 'Withdraw' | 'Profit' | WithdrawResponse | 'Team A won' | 'Team B won' | ChangeOwner | 'stop') {
+    async send(args: { amount: BN, from?: Address, debug?: boolean }, message: 'Bet A' | 'Bet B' | 'Withdraw' | WithdrawResponse | 'Profit' | 'Team A won' | 'Team B won' | null | ChangeOwner | 'stop') {
         let body: Cell | null = null;
         if (message === 'Bet A') {
             body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
@@ -382,17 +382,20 @@ export class TonBet {
         if (message === 'Withdraw') {
             body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
         }
-        if (message === 'Profit') {
-            body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
-        }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'WithdrawResponse') {
             body = packWithdrawResponse(message);
+        }
+        if (message === 'Profit') {
+            body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
         }
         if (message === 'Team A won') {
             body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
         }
         if (message === 'Team B won') {
             body = beginCell().storeUint(0, 32).storeBuffer(Buffer.from(message)).endCell();
+        }
+        if (message === null) {
+            body = new Cell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'ChangeOwner') {
             body = packChangeOwner(message);
@@ -428,6 +431,56 @@ export class TonBet {
             let result = await this.executor.get('completed', __stack, { debug: true });
             if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
             return result.stack.readBoolean();
+        } catch (e) {
+            if (e instanceof ExecuteError) {
+                if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }
+                if (TonBet_errors[e.exitCode.toString()]) {
+                    throw new Error(TonBet_errors[e.exitCode.toString()]);
+                }
+            }
+            throw e;
+        }
+    }
+    async getTeamAWon() {
+        try {
+            let __stack: StackItem[] = [];
+            let result = await this.executor.get('teamAWon', __stack, { debug: true });
+            if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
+            return result.stack.readBoolean();
+        } catch (e) {
+            if (e instanceof ExecuteError) {
+                if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }
+                if (TonBet_errors[e.exitCode.toString()]) {
+                    throw new Error(TonBet_errors[e.exitCode.toString()]);
+                }
+            }
+            throw e;
+        }
+    }
+    async getWonPpt() {
+        try {
+            let __stack: StackItem[] = [];
+            let result = await this.executor.get('wonPPT', __stack, { debug: true });
+            if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
+            return result.stack.readBigNumber();
+        } catch (e) {
+            if (e instanceof ExecuteError) {
+                if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }
+                if (TonBet_errors[e.exitCode.toString()]) {
+                    throw new Error(TonBet_errors[e.exitCode.toString()]);
+                }
+            }
+            throw e;
+        }
+    }
+    async getWon(valueA: BN, valueB: BN) {
+        try {
+            let __stack: StackItem[] = [];
+            __stack.push({ type: 'int', value: valueA });
+            __stack.push({ type: 'int', value: valueB });
+            let result = await this.executor.get('won', __stack, { debug: true });
+            if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
+            return result.stack.readBigNumber();
         } catch (e) {
             if (e instanceof ExecuteError) {
                 if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }
@@ -492,6 +545,23 @@ export class TonBet {
             let result = await this.executor.get('balanceB', __stack, { debug: true });
             if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
             return result.stack.readBigNumber();
+        } catch (e) {
+            if (e instanceof ExecuteError) {
+                if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }
+                if (TonBet_errors[e.exitCode.toString()]) {
+                    throw new Error(TonBet_errors[e.exitCode.toString()]);
+                }
+            }
+            throw e;
+        }
+    }
+    async getParticipantAddress(owner: Address) {
+        try {
+            let __stack: StackItem[] = [];
+            __stack.push({ type: 'slice', cell: beginCell().storeAddress(owner).endCell() });
+            let result = await this.executor.get('participantAddress', __stack, { debug: true });
+            if (result.debugLogs.length > 0) { console.warn(result.debugLogs); }
+            return result.stack.readAddress();
         } catch (e) {
             if (e instanceof ExecuteError) {
                 if (e.debugLogs.length > 0) { console.warn(e.debugLogs); }

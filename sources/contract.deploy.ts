@@ -1,20 +1,21 @@
-import { contractAddress, toNano } from "ton";
-import { packAdd, SampleTactContract_init } from "./output/sample_SampleTactContract";
+import BN from "bn.js";
+import { Address, contractAddress, toNano } from "ton";
+import { TonBet_init } from "./output/sample_TonBet";
 import { printAddress, printDeploy, printHeader } from "./utils/print";
-import { randomAddress } from "./utils/randomAddress";
 
 (async () => {
 
     // Parameters
-    let owner = randomAddress(0, 'some-owner'); // Replace owner with your address
-    let packed = packAdd({ $$type: 'Add', amount: 10n }); // Replace if you want another message used
-    let init = await SampleTactContract_init(owner);
+    let owner = Address.parse('kQD6oPnzaaAMRW24R8F0_nlSsJQni0cGHntR027eT9_sgtwt');
+    let minBet = toNano(10);
+    let fee = new BN(5); // 5%
+    let init = await TonBet_init(owner, minBet, fee);
     let address = contractAddress({ workchain: 0, initialCode: init.code, initialData: init.data });
-    let deployAmount = toNano(10);
+    let deployAmount = toNano(1);
     let testnet = true;
 
     // Print basics
-    printHeader('SampleTactContract');
+    printHeader('TonBet');
     printAddress(address);
-    printDeploy(init, deployAmount, packed, testnet);
+    printDeploy(init, deployAmount, '', testnet);
 })();

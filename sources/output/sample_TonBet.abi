@@ -523,12 +523,12 @@
       "comment": "Withdraw"
     },
     {
-      "kind": "internal-comment",
-      "comment": "Profit"
-    },
-    {
       "kind": "internal-binary",
       "type": "WithdrawResponse"
+    },
+    {
+      "kind": "internal-comment",
+      "comment": "Profit"
     },
     {
       "kind": "internal-comment",
@@ -537,6 +537,9 @@
     {
       "kind": "internal-comment",
       "comment": "Team B won"
+    },
+    {
+      "kind": "internal-empty"
     },
     {
       "kind": "internal-binary",
@@ -554,6 +557,50 @@
       "returns": {
         "kind": "ref",
         "name": "Bool",
+        "optional": false
+      }
+    },
+    {
+      "name": "teamAWon",
+      "args": [],
+      "returns": {
+        "kind": "ref",
+        "name": "Bool",
+        "optional": false
+      }
+    },
+    {
+      "name": "wonPPT",
+      "args": [],
+      "returns": {
+        "kind": "ref",
+        "name": "Int",
+        "optional": false
+      }
+    },
+    {
+      "name": "won",
+      "args": [
+        {
+          "name": "valueA",
+          "type": {
+            "kind": "ref",
+            "name": "Int",
+            "optional": false
+          }
+        },
+        {
+          "name": "valueB",
+          "type": {
+            "kind": "ref",
+            "name": "Int",
+            "optional": false
+          }
+        }
+      ],
+      "returns": {
+        "kind": "ref",
+        "name": "Int",
         "optional": false
       }
     },
@@ -590,6 +637,24 @@
       "returns": {
         "kind": "ref",
         "name": "Int",
+        "optional": false
+      }
+    },
+    {
+      "name": "participantAddress",
+      "args": [
+        {
+          "name": "owner",
+          "type": {
+            "kind": "ref",
+            "name": "Address",
+            "optional": false
+          }
+        }
+      ],
+      "returns": {
+        "kind": "ref",
+        "name": "Address",
         "optional": false
       }
     },

@@ -38,7 +38,7 @@ contract BetHolder with Ownable {
         let ctx: Context = context();
         require(ctx.sender == self.master);
 
-        // Allow only once
+        // Allow only when not completed
         require(!self.completed);
 
         // Update balance
@@ -79,6 +79,10 @@ contract BetHolder with Ownable {
                 owner: self.owner
             })
         });
+    }
+
+    get fun completed(): Bool {
+        return self.completed;
     }
 
     get fun master(): Address {
@@ -161,8 +165,9 @@ contract TonBet with OwnableTransferable, Stoppable {
 
         // Checks
         let ctx: Context = context();
-        self.requireOwner();
-        require(!self.completed);
+        self.requireOwner(); // Only onwer can decide
+        require(self.stopped); // Must be stopped
+        require(!self.completed); // Must not be completed
 
         // Calculate balances
         let total: Int = self.balanceA + self.balanceB;
@@ -183,8 +188,24 @@ contract TonBet with OwnableTransferable, Stoppable {
         }
         self.wonPPT = wonPPT;
 
+        // Update state
+        self.teamAwon = isA;
+        self.completed = true;
+
         // Send response
         simpleReply(0, 64 + 2); // Remaining value + ignore errors (not recoverable anyway)
+    }
+
+    fun resolveWonAmount(valueA: Int, valueB: Int): Int {
+        let value: Int = 0;
+        if (self.completed) {
+            if (self.teamAwon && valueA > 0) {
+                value = (valueA * self.wonPPT) / 1000000000000;
+            } else if (!self.teamAwon && valueB > 0) {
+                value = (valueB * self.wonPPT) / 1000000000000;
+            }
+        }
+        return value;
     }
 
     //
@@ -221,6 +242,26 @@ contract TonBet with OwnableTransferable, Stoppable {
         });
     }
 
+    receive(msg: WithdrawResponse) {
+
+        // Check source
+        let ctx: Context = context();
+        let holderInit: StateInit = initOf BetHolder(myAddress(), msg.owner);
+        let holderAddress: Address = contractAddress(0, holderInit.code, holderInit.data);
+        require(ctx.sender == holderAddress);
+
+        // Calculate value
+        let value: Int = self.resolveWonAmount(msg.valueA, msg.valueB);
+
+        // Send value
+        send(SendParameters{
+            value: value, 
+            to: msg.owner, 
+            mode: 64 + 2, // Renaining value + ignore errors (not recoverable anyway)
+            bounce: false
+        });
+    }
+
     receive("Profit") {
         
         // Only onwer
@@ -236,30 +277,6 @@ contract TonBet with OwnableTransferable, Stoppable {
         simpleReply(0, 128 + 2); // Remaining balance + ignore errors (not recoverable anyway)
     }
 
-    receive(msg: WithdrawResponse) {
-
-        // Check source
-        let ctx: Context = context();
-        let holderInit: StateInit = initOf BetHolder(myAddress(), msg.owner);
-        let holderAddress: Address = contractAddress(0, holderInit.code, holderInit.data);
-        require(ctx.sender == holderAddress);
-
-        // Calculate value
-        let value: Int = 0;
-        if (self.teamAwon && msg.valueA > 0) {
-            value = (msg.valueA * self.wonPPT) / 1000000000000;
-        } else if (!self.teamAwon && msg.valueB > 0) {
-            value = (msg.valueB * self.wonPPT) / 1000000000000;
-        }
-
-        // Send value
-        send(SendParameters{
-            value: 0, 
-            to: msg.owner, 
-            mode: 64 + 2, // Renaining value + ignore errors (not recoverable anyway)
-            bounce: false
-        });
-    }
 
     receive("Team A won") {
         self.teamWon(true);
@@ -269,12 +286,30 @@ contract TonBet with OwnableTransferable, Stoppable {
         self.teamWon(false);
     }
 
+    receive() {
+        require(false); // For deployments
+    }
+
     //
     // Getters
     //
 
     get fun completed(): Bool {
         return self.completed;
+    }
+
+    get fun teamAWon(): Bool {
+        return self.teamAwon;
+    }
+
+    get fun wonPPT(): Int {
+        return self.wonPPT;
+    }
+
+    get fun won(valueA: Int, valueB: Int): Int {
+        require(valueA >= 0);
+        require(valueB >= 0);
+        return self.resolveWonAmount(valueA, valueB);
     }
 
     get fun minBet(): Int {
@@ -291,6 +326,11 @@ contract TonBet with OwnableTransferable, Stoppable {
 
     get fun balanceB(): Int {
         return self.balanceB;
+    }
+
+    get fun participantAddress(owner: Address): Address {
+        let holderInit: StateInit = initOf BetHolder(myAddress(), owner);
+        return contractAddress(0, holderInit.code, holderInit.data);
     }
 }
 

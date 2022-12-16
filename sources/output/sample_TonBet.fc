@@ -275,6 +275,7 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) inline {
     var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
     var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
+    require(self'stopped);
     require((~ self'completed));
     int total = (self'balanceA + self'balanceB);
     int wonBalance = 0;
@@ -291,8 +292,23 @@ cell __gen_TonBet_init(cell sys', slice owner, int minBet, int fee) inline {
         wonPPT = ((total * 1000000000000) / wonBalance);
     }
     self'wonPPT = wonPPT;
+    self'teamAwon = isA;
+    self'completed = true;
     simpleReply(0, (64 + 2));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
+((slice, int, int, int, int, int, int, int, int), int) __gen_TonBet_resolveWonAmount((slice, int, int, int, int, int, int, int, int) self, int valueA, int valueB) impure inline {
+    var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
+    int value = 0;
+    if (self'completed) {
+        if ((self'teamAwon & (valueA > 0))) {
+            value = ((valueA * self'wonPPT) / 1000000000000);
+        } elseif (((~ self'teamAwon) & (valueB > 0))) {
+            value = ((valueB * self'wonPPT) / 1000000000000);
+        }
+    }
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), value);
 }
 
 int __gen_TonBet_completed((slice, int, int, int, int, int, int, int, int) self) impure inline {
@@ -303,6 +319,41 @@ int __gen_TonBet_completed((slice, int, int, int, int, int, int, int, int) self)
 _ __gen_get_completed() method_id(79554) {
     var self = __gen_load_TonBet();
     var res = __gen_TonBet_completed(self);
+    return res;
+}
+
+int __gen_TonBet_teamAWon((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
+    return self'teamAwon;
+}
+
+_ __gen_get_teamAWon() method_id(66248) {
+    var self = __gen_load_TonBet();
+    var res = __gen_TonBet_teamAWon(self);
+    return res;
+}
+
+int __gen_TonBet_wonPPT((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
+    return self'wonPPT;
+}
+
+_ __gen_get_wonPPT() method_id(82032) {
+    var self = __gen_load_TonBet();
+    var res = __gen_TonBet_wonPPT(self);
+    return res;
+}
+
+int __gen_TonBet_won((slice, int, int, int, int, int, int, int, int) self, int valueA, int valueB) impure inline {
+    var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
+    require((valueA >= 0));
+    require((valueB >= 0));
+    return (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_resolveWonAmount(valueA, valueB);
+}
+
+_ __gen_get_won(int valueA,int valueB) method_id(117732) {
+    var self = __gen_load_TonBet();
+    var res = __gen_TonBet_won(self, valueA, valueB);
     return res;
 }
 
@@ -347,6 +398,18 @@ int __gen_TonBet_balanceB((slice, int, int, int, int, int, int, int, int) self) 
 _ __gen_get_balanceB() method_id(84985) {
     var self = __gen_load_TonBet();
     var res = __gen_TonBet_balanceB(self);
+    return res;
+}
+
+slice __gen_TonBet_participantAddress((slice, int, int, int, int, int, int, int, int) self, slice owner) impure inline {
+    var ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)) = self;
+    var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), owner);
+    return __tact_compute_contract_address(0, holderInit'code, holderInit'data);
+}
+
+_ __gen_get_participantAddress(slice owner) method_id(105758) {
+    var self = __gen_load_TonBet();
+    var res = __gen_TonBet_participantAddress(self, owner);
     return res;
 }
 
@@ -395,6 +458,18 @@ _ __gen_get_stopped() method_id(74107) {
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
+(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_WithdrawResponse((slice, int, int, int, int, int, int, int, int) self, (slice, int, int) msg) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    var (msg'owner, msg'valueA, msg'valueB) = msg;
+    var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
+    var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), msg'owner);
+    slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
+    require(__tact_address_eq(ctx'sender, holderAddress));
+    int value = (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_resolveWonAmount(msg'valueA, msg'valueB);
+    send((false, msg'owner, value, (64 + 2), null(), null(), null()));
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
 ((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_cdc618613e782bbde2b8ac36290732806bf69621cebb9fc506b045ba4d0b4466((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_requireOwner();
@@ -403,23 +478,6 @@ _ __gen_get_stopped() method_id(74107) {
         raw_reserve(locked, 0);
     }
     simpleReply(0, (128 + 2));
-    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
-}
-
-(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive_WithdrawResponse((slice, int, int, int, int, int, int, int, int) self, (slice, int, int) msg) impure inline {
-    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
-    var (msg'owner, msg'valueA, msg'valueB) = msg;
-    var (ctx'bounced, ctx'sender, ctx'value) = __tact_context_get();
-    var (holderInit'code, holderInit'data) = __gen_BetHolder_init_child(__tact_context_sys, my_address(), msg'owner);
-    slice holderAddress = __tact_compute_contract_address(0, holderInit'code, holderInit'data);
-    require(__tact_address_eq(ctx'sender, holderAddress));
-    int value = 0;
-    if ((self'teamAwon & (msg'valueA > 0))) {
-        value = ((msg'valueA * self'wonPPT) / 1000000000000);
-    } elseif (((~ self'teamAwon) & (msg'valueB > 0))) {
-        value = ((msg'valueB * self'wonPPT) / 1000000000000);
-    }
-    send((false, msg'owner, 0, (64 + 2), null(), null(), null()));
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
@@ -432,6 +490,12 @@ _ __gen_get_stopped() method_id(74107) {
 ((slice, int, int, int, int, int, int, int, int), ()) __gen_TonBet_receive_comment_05daf813b58fba079b0baa08e353803113add476eb2df5f522b70faf2fffb310((slice, int, int, int, int, int, int, int, int) self) impure inline {
     var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
     (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT)~__gen_TonBet_teamWon(false);
+    return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
+}
+
+(((slice, int, int, int, int, int, int, int, int)), ()) __gen_TonBet_receive((slice, int, int, int, int, int, int, int, int) self) impure inline {
+    var (self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT) = self;
+    require(false);
     return ((self'owner, self'balanceA, self'balanceB, self'minBet, self'fee, self'stopped, self'completed, self'teamAwon, self'wonPPT), ());
 }
 
@@ -475,6 +539,14 @@ _ __gen_get_stopped() method_id(74107) {
         var self = __gen_load_TonBet();
         var msg = in_msg~__gen_read_WithdrawResponse();
         self~__gen_TonBet_receive_WithdrawResponse(msg);
+        __gen_store_TonBet(self);
+        return ();
+    }
+    
+    ;; Receive empty message
+    if ((op == 0) & (slice_bits(in_msg) <= 32)) {
+        var self = __gen_load_TonBet();
+        self~__gen_TonBet_receive();
         __gen_store_TonBet(self);
         return ();
     }
@@ -567,5 +639,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmbEQB8oT24ARBpQDijZ2btyBwEUQhNGdKaRGXgtVFJp1T";
+    return "ipfs://QmNPPMxsdwtx1uGK2XtW93gMow1DBFwe54tFEvEkukoWJN";
 }

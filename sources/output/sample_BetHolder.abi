@@ -513,6 +513,15 @@
   ],
   "getters": [
     {
+      "name": "completed",
+      "args": [],
+      "returns": {
+        "kind": "ref",
+        "name": "Bool",
+        "optional": false
+      }
+    },
+    {
       "name": "master",
       "args": [],
       "returns": {

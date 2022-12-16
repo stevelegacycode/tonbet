@@ -615,6 +615,25 @@ SETCP0
     ISNULL
     128 THROWIF
 
+  79554: 
+    c4 PUSH
+    CTOS
+    LDREF
+    s0 s1 XCHG
+    2 SETGLOBVAR
+    LDMSGADDR
+    s0 s1 XCHG
+    s0 s1 XCHG
+    LDMSGADDR
+    s0 s1 XCHG
+    s0 s1 XCHG
+    LDGRAMS
+    LDGRAMS
+    1 LDI
+    5 1 BLKSWAP
+    1 5 BLKDROP2
+    4 1 BLKDROP2
+
   owner: 
     c4 PUSH
     CTOS
